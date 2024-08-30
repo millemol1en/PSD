@@ -121,8 +121,6 @@ let rec simplify (e: aexpr) : aexpr =
         | Const 0, _ -> Const 0
         | e1, e2 -> Mul(simplify e1, simplify e2)
 
-
-
 let rec diff (exp: aexpr) var : aexpr =
     match exp with
     | Const _ -> Const 0

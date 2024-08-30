@@ -2,7 +2,9 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Assignment_01", "Assignment_01\Assignment_01.fsproj", "{9DE2E7FB-61F0-4DC8-BDBF-795411BBBF8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSD_Csharp", "PSD_Csharp.csproj", "{259AB0D5-4D4F-4974-ACA1-04FD3A1E03E6}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PSD", "PSD.fsproj", "{505D9695-4C4A-43FF-89C6-1B302623CAB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,5 +19,13 @@ Global
 		{9DE2E7FB-61F0-4DC8-BDBF-795411BBBF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DE2E7FB-61F0-4DC8-BDBF-795411BBBF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DE2E7FB-61F0-4DC8-BDBF-795411BBBF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259AB0D5-4D4F-4974-ACA1-04FD3A1E03E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259AB0D5-4D4F-4974-ACA1-04FD3A1E03E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259AB0D5-4D4F-4974-ACA1-04FD3A1E03E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259AB0D5-4D4F-4974-ACA1-04FD3A1E03E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505D9695-4C4A-43FF-89C6-1B302623CAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505D9695-4C4A-43FF-89C6-1B302623CAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505D9695-4C4A-43FF-89C6-1B302623CAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505D9695-4C4A-43FF-89C6-1B302623CAB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

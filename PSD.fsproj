@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="Assignment_01\Assignment_01.fsproj" />
+<!--    <ProjectReference Include="Assignment_01\Assignment_01.fsproj" />-->
+    <Compile Include="./Assignment_01/Intro2.fs" />
   </ItemGroup>
 
 </Project>
