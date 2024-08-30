@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zmIPSRayIDA=",
+  "success": true,
+  "projectFilePath": "/Users/victorlacour/Desktop/5th Sem/Programmer som Data/PSD/PSD_Csharp.csproj",
+  "expectedPackageFiles": [
+    "/Users/victorlacour/.nuget/packages/fsharp.core/8.0.300/fsharp.core.8.0.300.nupkg.sha512"
+  ],
+  "logs": []
+}
