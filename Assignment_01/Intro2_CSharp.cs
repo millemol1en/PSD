@@ -1,7 +1,10 @@
 namespace PSD_Csharp.Assignment_01;
 
-// AUTHOR: Victor La Cuur
-// Assignment 1.4
+///////////////////////////
+///                     ///
+///     EXERCISE 1.4    ///
+///                     ///
+///////////////////////////
 
 // Our prior data type in F#, expr, is now an abstract class.
 abstract class Expr
@@ -54,7 +57,7 @@ class Var : Expr
     }
 }
 
-// The binary operations is with, fucking, either Expr or Var, y'know? 
+// The binary operations is with, either Expr or Var, y'know? 
 abstract class Binop : Expr
 {
     public Expr Left { get; }

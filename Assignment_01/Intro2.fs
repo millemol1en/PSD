@@ -19,16 +19,6 @@ type expr =
     | Prim of string * expr * expr
     | If of expr * expr * expr
 
-
-//note: We changed the names of Var and CstI as to not get issues between the two types of expressions.
-type aexpr =
-    | Const of int
-    | AVar of string
-    | Add of aexpr * aexpr
-    | Mul of aexpr * aexpr
-    | Sub of aexpr * aexpr
-
-
 let e1 = CstI 17
 let e2 = Prim("min", CstI 3, Var "a")
 let e3 = Prim("min", Prim("*", Var "b", CstI 9), Var "a")
@@ -38,29 +28,11 @@ let e6 = Prim("==", CstI 2, CstI 2)
 let e7 = Prim("==", CstI 2, CstI 5)
 let e8 = If(Var "a", CstI 11, CstI 22)
 
-// 1.2.ii
-let e9 = Sub(AVar "v", Add(AVar "w", AVar "z"))
-
-// 2 ∗ (v − (w + z))
-let e10 = Mul(Const 2, Sub(AVar "v", Add(AVar "w", AVar "z")))
-
-// x + y + z + v.
-let e11 = Add(AVar "x", Add(AVar "y", Add(AVar "z", AVar "v")))
-
-let e12 = Add(AVar "x", Const 0)
-let e13 = Mul(Const 0, AVar "x")
-
-let e14 = Sub(Const 10, Const 10)
-
-let e15 = Sub(Const 10, Const 0)
-
-let e16 = Mul(Const 2, Const 5)
-
-let e17 = Mul(Const 2, Sub(Const 10, Const 0))
-
-
-(* Evaluation within an environment *)
-
+///////////////////////////
+///                     ///
+///     EXERCISE 1.1    ///
+///                     ///
+///////////////////////////
 let rec eval e (env: (string * int) list) : int =
     match e with
     | CstI i -> i
@@ -92,6 +64,32 @@ let e2v1 = eval e2 env
 let e2v2 = eval e2 [ ("a", 314) ]
 let e3v = eval e3 env
 
+///////////////////////////
+///                     ///
+///     EXERCISE 1.2    ///
+///                     ///
+///////////////////////////
+// Note: We changed the names of Var and CstI as to not get issues between the two types of expressions.
+// (i)
+type aexpr =
+    | Const of int
+    | AVar of string
+    | Add of aexpr * aexpr
+    | Mul of aexpr * aexpr
+    | Sub of aexpr * aexpr
+    
+// (ii)
+let e9 = Sub(AVar "v", Add(AVar "w", AVar "z"))                     // v - (w + z)
+let e10 = Mul(Const 2, Sub(AVar "v", Add(AVar "w", AVar "z")))      // 2 ∗ (v − (w + z))
+let e11 = Add(AVar "x", Add(AVar "y", Add(AVar "z", AVar "v")))     // x + y + z + v
+let e12 = Add(AVar "x", Const 0)
+let e13 = Mul(Const 0, AVar "x")
+let e14 = Sub(Const 10, Const 10)
+let e15 = Sub(Const 10, Const 0)
+let e16 = Mul(Const 2, Const 5)
+let e17 = Mul(Const 2, Sub(Const 10, Const 0))
+
+// (iii)
 let rec fmt (e: aexpr) : string =
     match e with
     | Const x -> string x
@@ -100,6 +98,7 @@ let rec fmt (e: aexpr) : string =
     | Sub(e1, e2) -> "(" + fmt e1 + " - " + fmt e2 + ")"
     | Mul(e1, e2) -> "(" + fmt e1 + " * " + fmt e2 + ")"
 
+// (iv)
 let rec simplify (e: aexpr) : aexpr =
     match e with
     | Const x -> Const x
@@ -120,7 +119,7 @@ let rec simplify (e: aexpr) : aexpr =
         | _, Const 0 -> Const 0
         | Const 0, _ -> Const 0
         | e1, e2 -> Mul(simplify e1, simplify e2)
-
+// (v)
 let rec diff (exp: aexpr) var : aexpr =
     match exp with
     | Const _ -> Const 0
