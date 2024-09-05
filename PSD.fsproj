@@ -12,4 +12,12 @@
     <Compile Include="./Assignment_01/IntComp.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="Assignment_02\Expr.fs" />
+    <Compile Include="Assignment_02\Absyn.fs" />
+    <Content Include="Assignment_02\ExprLex.fsl" />
+    <Content Include="Assignment_02\ExprPar.fsy" />
+    <Compile Include="Assignment_02\ex2_4Handout.fs" />
+  </ItemGroup>
+
 </Project>
