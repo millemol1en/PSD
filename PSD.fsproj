@@ -9,6 +9,7 @@
 <!--    <ProjectReference Include="Assignment_01\Assignment_01.fsproj" />-->
     <Compile Include="./Assignment_01/Intro2.fs" />
     <Compile Include="./Assignment_01/IntComp.fs" />
+    <Compile Include="./Assignment_01/IntComp.fs" />
   </ItemGroup>
 
 </Project>
