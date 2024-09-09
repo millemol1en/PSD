@@ -356,3 +356,7 @@ let sinstrToInt (s : sinstr) : int list =
     | SMul -> (4 :: [])
     | SPop -> (5 :: [])
     | SSwap -> (6 :: []);;
+    
+    
+let rec assemble (s: sinstr list) : int list =
+    List.fold(fun acc elem -> (acc @ (sinstrToInt elem))) [] s
