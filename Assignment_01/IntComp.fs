@@ -147,3 +147,13 @@ let rec tcomp (e : expr) (cenv : string list) : texpr =
             let newCenv = bVar :: cenv
             TLet (tcomp varExpr newCenv, tcomp expr newCenv)
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
+    
+    
+(************************
+
+ASSIGNMENT 2
+
+************************)
+    
+
+    
