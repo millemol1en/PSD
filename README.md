@@ -22,3 +22,4 @@ fsi-r FSharp.PowerPack.dll Absyn.fs ExprPar.fs ExprLex.fs ^
 Parse.fs
 
 dotnet fsi -r fsharp/FsLexYacc.Runtime.11.3.0/lib/netstandard2.0/FsLexYacc.Runtime.dll Assignment_03/Expr/Absyn.fs Assignment_03/Expr/ExprPar.fs Assignment_03/Expr/ExprLex.fs Assignment_03/Expr/Parse.fs
+dotnet fsi -r fsharp/FsLexYacc.Runtime.11.3.0/lib/netstandard2.0/FsLexYacc.Runtime.dll Assignment_03/Expr/Absyn.fs Assignment_03/Expr/ExprPar.fs Assignment_03/Expr/ExprLex.fs Assignment_03/Expr/Parse.fs Assignment_03\Expr\compString.fs

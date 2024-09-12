@@ -11,6 +11,7 @@
     <Compile Include="Assignment_03\Expr\Expr.fs" />
     <Compile Include="Assignment_03\Expr\ExprLex.fs" />
     <Compile Include="Assignment_03\Expr\Parse.fs" />
+    <Compile Include="Assignment_03\Expr\compString.fs" />
     <!--    <ProjectReference Include="Assignment_01\Assignment_01.fsproj" />-->
     <Compile Include="./Assignment_01/Intro2.fs" />
     <Compile Include="./Assignment_01/IntComp.fs" />
