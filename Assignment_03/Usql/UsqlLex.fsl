@@ -7,7 +7,7 @@
 module UsqlLex
   
 open System.Collections.Generic      (* for Dictionary *)
-open Microsoft.FSharp.Text.Lexing
+open FSharp.Text.Lexing
 open UsqlPar;
 
 let lexemeAsString lexbuf = 

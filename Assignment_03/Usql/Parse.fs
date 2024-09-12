@@ -1,14 +1,16 @@
 (* Lexing and parsing of micro-SQL SELECT statements using fslex and fsyacc *)
 
+module Parse
+
 open System
 open System.IO
-open Microsoft.FSharp.Text.Lexing
+open FSharp.Text.Lexing
 open Absyn
 
 (* Plain parsing from a string, with poor error reporting *)
 
 let fromString (str : string) : stmt =
-    let lexbuf = Lexing.LexBuffer<char>.FromString(str)
+    let lexbuf = LexBuffer<char>.FromString(str)
     try 
       UsqlPar.Main UsqlLex.Token lexbuf
     with 
@@ -20,7 +22,7 @@ let fromString (str : string) : stmt =
 
 let fromFile (filename : string) =
     use reader = new StreamReader(filename)
-    let lexbuf = Lexing.LexBuffer<char>.FromTextReader reader
+    let lexbuf = LexBuffer<char>.FromTextReader reader
     try 
       UsqlPar.Main UsqlLex.Token lexbuf
     with 

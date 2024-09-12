@@ -1,16 +1,18 @@
 (* File Expr/Parse.fs *)
 (* Lexing and parsing of simple expressions using fslex and fsyacc *)
 
+module Parse
+
 open System
 open System.IO
 open System.Text
-open Microsoft.FSharp.Text.Lexing
+open FSharp.Text.Lexing
 open Absyn
 
 (* Plain parsing from a string, with poor error reporting *)
 
 let fromString (str : string) : expr =
-    let lexbuf = Lexing.LexBuffer<char>.FromString(str)
+    let lexbuf = LexBuffer<char>.FromString(str)
     try 
       ExprPar.Main ExprLex.Token lexbuf
     with 
@@ -22,7 +24,7 @@ let fromString (str : string) : expr =
 
 let fromFile (filename : string) =
     use reader = new StreamReader(filename)
-    let lexbuf = Lexing.LexBuffer<char>.FromTextReader reader
+    let lexbuf = LexBuffer<char>.FromTextReader reader
     try 
       ExprPar.Main ExprLex.Token lexbuf
     with 

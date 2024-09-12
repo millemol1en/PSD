@@ -95,7 +95,7 @@ let run e = eval e []
 (* Checking whether an expression is closed.  The environment env is a
    list of the bound variables.  *)
 
-let mem x vs = List.exists (fun y -> x=y) vs;;
+let mem x ys = List.exists (fun y -> x=y) ys;;
 
 let rec closedin (e : expr) (env : string list) : bool =
     match e with 

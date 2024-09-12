@@ -13,8 +13,6 @@
 %token LPAR RPAR
 %token EOF
 
-%left MINUS PLUS        /* lowest precedence  */
-%left TIMES             /* highest precedence */
 
 %start Main
 %type <Absyn.expr> Main 
