@@ -6,6 +6,7 @@ module Parse
 open System
 open System.IO
 open System.Text
+open Expr
 open (*Microsoft.*)FSharp.Text
 open Absyn
 
@@ -32,3 +33,14 @@ let fromFile (filename : string) =
                failwithf "%s in file %s near line %d, column %d\n" 
                   (exn.Message) filename (pos.Line+1) pos.Column
 
+
+////////////////////
+//                //
+//  EXERCISE 3.6  //
+//                //
+////////////////////
+let compString (s : string) : sinstr list =
+  (scomp (fromString s) [])
+  
+ 
+  
