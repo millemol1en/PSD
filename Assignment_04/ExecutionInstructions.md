@@ -10,3 +10,7 @@ to run initiate the lexer and parser creation.
 `dotnet fsi -r ../fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs`
 #### Command to run is:
 `dotnet fsi -r ../fsharp/FsLexYacc.Runtime.dll Absyn.fs FunPar.fs FunLex.fs Parse.fs Fun.fs ParseAndRun.fs`
+#### Command to open the environment - write in Terminal:
+`open ParseAndRun`
+#### To quit the environment:
+`#q;;`

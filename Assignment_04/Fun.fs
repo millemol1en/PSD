@@ -10,6 +10,7 @@
 module Fun
 
 open Absyn
+open Parse
 
 (* Environment operations *)
 
@@ -113,4 +114,34 @@ let ex5 =
                           Call(Var "fib", Prim("-", Var "n", CstI 1)),
                           Call(Var "fib", Prim("-", Var "n", CstI 2))),
                      CstI 1), Call(Var "fib", CstI 25)));;
-                     
+
+
+////////////////////////
+//                    //
+//    EXERCISE 4.2    //
+//                    //
+////////////////////////
+
+(*
+
+Exercise 4.2 Write more example programs in the functional language, and test
+them:
+  • Compute the sum of the numbers from 1000 down to 1. Do this by defining a
+    function sum n that computes the sum n + (n − 1) +···+ 2 + 1. (Use straightforward summation, no clever tricks.)
+  • Compute the number 38, that is, 3 raised to the power 8. Again, use a recursive
+    function.
+  • Compute 30 + 31 +···+ 310 + 311, using a recursive function (or two, if you
+    prefer).
+  • Compute 18 + 28 +···+ 108, again using a recursive function (or two).
+
+*)
+
+let Question4_2_1_String = @"
+  let sum n = if n=0 then 0 else n + sum(n-1)
+  in sum 1000 end
+";;
+
+let Question4_2_1_Expr = fromString Question4_2_1_String
+
+// let sum (n : int)    
+

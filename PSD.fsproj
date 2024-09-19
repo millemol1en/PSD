@@ -21,7 +21,11 @@
 <!--  </ItemGroup>-->
 
   <ItemGroup>
-    <Compile Include="./Assignment_04/*" />
+      <Compile Include="./Assignment_04/Absyn.fs" />
+      <Compile Include="./Assignment_04/FunPar.fs" />
+      <Compile Include="./Assignment_04/FunLex.fs" />
+      <Compile Include="./Assignment_04/Parse.fs" />
+      <Compile Include="./Assignment_04/Fun.fs" />
   </ItemGroup>
   
   <ItemGroup>
