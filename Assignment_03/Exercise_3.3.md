@@ -1,18 +1,18 @@
 ```fsharp
-    Main ::= Expr EOF                       // rule A
-    Expr ::= NAME                           // rule B
-    | CSTINT                                // rule C
-    | MINUS CSTINT                          // rule D
-    | LPAR Expr RPAR                        // rule E
-    | LET NAME EQ Expr IN Expr END          // rule F
-    | Expr TIMES Expr                       // rule G
-    | Expr PLUS Expr                        // rule H
-    | Expr MINUS Expr                       // rule I
+Main ::= Expr EOF               // rule A
+Expr ::= NAME                   // rule B
+| CSTINT                        // rule C
+| MINUS CSTINT                  // rule D
+| LPAR Expr RPAR                // rule E
+| LET NAME EQ Expr IN Expr END  // rule F
+| Expr TIMES Expr               // rule G
+| Expr PLUS Expr                // rule H
+| Expr MINUS Expr               // rule I
 ```
 
 Write out the rightmost derivation of the string:
 ```fsharp
-                let z = (17) in z + 2 * 3 end EOF
+  let z = (17) in z + 2 * 3 end EOF
 ```
 
 Steps are:
