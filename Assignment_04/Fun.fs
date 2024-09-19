@@ -136,12 +136,21 @@ them:
 
 *)
 
+//////// QUESTION 4.2.1 //////////////
+
+
 let Question4_2_1_String = @"
   let sum n = if n=0 then 0 else n + sum(n-1)
   in sum 1000 end
 ";;
 
 let Question4_2_1_Expr = fromString Question4_2_1_String
+
+let q4_2_1 = 
+    Letfun("sum", "n", If
+       (Prim ("=", Var "n", CstI 0), CstI 0,
+        Prim ("+", Var "n", Call (Var "sum", Prim ("-", Var "n", CstI 1)))),
+    Call (Var "sum", CstI 1000))
 
 // let sum (n : int)    
 
