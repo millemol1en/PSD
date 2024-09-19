@@ -145,3 +145,47 @@ let Question4_2_1_Expr = fromString Question4_2_1_String
 
 // let sum (n : int)    
 
+let Question4_2_2_String = @"
+  let pow n = if n = 0 then 1 else 3 * pow (n - 1)
+  in pow 8 end
+";;
+
+let Question4_2_2_Expr =
+    Letfun ("pow", "n",
+        If
+       (Prim ("=", Var "n", CstI 0), CstI 1,
+        Prim ("*", CstI 3, Call (Var "pow", Prim ("-", Var "n", CstI 1)))),
+     Call (Var "pow", CstI 8))
+
+
+let Question4_2_3_String = @"
+  let pow n = if n = 0 then 1 else 3 * pow (n - 1)
+  in let sum n = if n=0 then 1 else (pow n) + sum(n - 1)
+    in sum 11
+    end
+  end
+";;
+
+let Question4_2_3_Expr =
+    Letfun ("pow", "n",
+     If
+       (Prim ("=", Var "n", CstI 0), CstI 1,
+        Prim ("*", CstI 3, Call (Var "pow", Prim ("-", Var "n", CstI 1)))),
+     Letfun
+       ("sum", "n",
+        If
+          (Prim ("=", Var "n", CstI 0), CstI 1,
+           Prim
+             ("+", Call (Var "pow", Var "n"),
+              Call (Var "sum", Prim ("-", Var "n", CstI 1)))),
+        Call (Var "sum", CstI 11)));;
+
+
+//! NOTE: This is NOT done!
+let Question4_2_4_String = @"
+  let pow n = if n = 0 then 1 else 8 * pow (n - 1)
+  in let sum n = if n = 10 then (pow n) else (pow n) + sum(n + 1)
+    in sum 1
+    end
+  end
+";;
