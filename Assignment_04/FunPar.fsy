@@ -7,16 +7,17 @@
  open Absyn;
 %}
 
+// [0] Tokens used to ...
 %token <int> CSTINT
 %token <string> NAME
 %token <bool> CSTBOOL
-
 %token ELSE END FALSE IF IN LET NOT THEN TRUE
 %token PLUS MINUS TIMES DIV MOD
 %token EQ NE GT LT GE LE
 %token LPAR RPAR 
 %token EOF
 
+// [1] 
 %left ELSE              /* lowest precedence  */
 %left EQ NE 
 %left GT LT GE LE
@@ -24,16 +25,23 @@
 %left TIMES DIV MOD 
 %nonassoc NOT           /* highest precedence  */
 
+// [1] Declare the start location as well as the types which the keywords mean 
 %start Main
 %type <Absyn.expr> Main Expr AtExpr Const
+%type <string list> Params
+%type <Absyn.expr list> Exprs
 %type <Absyn.expr> AppExpr
 
-%%
+// [2] Everything that follows the 2 percent signs are parser rules
+%%  
 
+// [3] Entry rule for our parser ...
 Main:
     Expr EOF                            { $1 }
 ;
 
+// [4] The dollar signs are used to indicate the value being given to the statement. 
+//     The number proceeding the sign indicates the order in the expression.
 Expr:
     AtExpr                              { $1                     }
   | AppExpr                             { $1                     }
@@ -52,17 +60,29 @@ Expr:
   | Expr LE    Expr                     { Prim("<=", $1, $3)     }
 ;
 
+// ... 
 AtExpr:
     Const                               { $1                     }
   | NAME                                { Var $1                 }
   | LET NAME EQ Expr IN Expr END        { Let($2, $4, $6)        }
-  | LET NAME NAME EQ Expr IN Expr END   { Letfun($2, $3, $5, $7) }
+  | LET NAME Params EQ Expr IN Expr END { Letfun($2, $3, $5, $7) }
   | LPAR Expr RPAR                      { $2                     }
 ;
 
+// ...
+Exprs:
+    AtExpr                              { [$1]                   }
+  | AtExpr Exprs                        { $1 :: $2               }
+;
+
+// ...
+Params: 
+    NAME                                { [$1]                   }
+  | NAME Params                         { $1 :: $2               }
+;
+
 AppExpr:
-    AtExpr AtExpr                       { Call($1, $2)           }
-  | AppExpr AtExpr                      { Call($1, $2)           }
+  | AtExpr Exprs                        { Call($1, $2)           }
 ;
 
 Const:
