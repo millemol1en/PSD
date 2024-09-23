@@ -1,3 +1,5 @@
+// LEXER SPECIFICATIONS
+
 {
  (* File Fun/Funlex.fsl 
     Lexer for a simple functional language (micro-ML) 
@@ -55,7 +57,9 @@ rule Token = parse
   | '%'             { MOD }
   | '('             { LPAR }
   | ')'             { RPAR }
-  | eof             { EOF }
+  | "||"            { OR   }     (* Exercise 4.5 *)
+  | "&&"            { AND   }    (* Exercise 4.5 *)
+  | eof             { EOF  }
   | _               { failwith "Lexer error: illegal symbol" }
 
 and SkipComment = parse

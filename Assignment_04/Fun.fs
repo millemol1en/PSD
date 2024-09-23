@@ -163,3 +163,10 @@ let Question4_2_4_String = @"
 //                    //
 ////////////////////////
 
+let e1 = @"let pow x n = if n=0 then 1 else x * pow x (n-1) in pow 3 8 end";;
+
+let e2 = @"
+let max2 a b = if a<b then b else a
+    in let max3 a b c = max2 a (max2 b c)
+  in max3 25 6 62 end
+end";;

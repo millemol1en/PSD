@@ -2,6 +2,8 @@
 module FunPar
 type token = 
   | EOF
+  | AND
+  | OR
   | LPAR
   | RPAR
   | EQ
@@ -29,6 +31,8 @@ type token =
   | CSTINT of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_AND
+    | TOKEN_OR
     | TOKEN_LPAR
     | TOKEN_RPAR
     | TOKEN_EQ
