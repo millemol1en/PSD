@@ -100,7 +100,7 @@ them:
 *)
 
 // Question 4.2.1:
-let Question4_2_1_String = @"
+let s1 = @"
   let sum n = if n=0 then 0 else n + sum(n-1)
   in sum 1000 end
 ";;
@@ -112,7 +112,7 @@ let Question4_2_1_String = @"
 //     Call (Var "sum", CstI 1000))
 
 // Question 4.2.2:
-let Question4_2_2_String = @"
+let s2 = @"
   let pow n = if n = 0 then 1 else 3 * pow (n - 1)
   in pow 8 end
 ";;
@@ -125,7 +125,7 @@ let Question4_2_2_String = @"
 //      Call (Var "pow", CstI 8))
 
 // Question 4.2.3:
-let Question4_2_3_String = @"
+let s3 = @"
   let pow n = if n = 0 then 1 else 3 * pow (n - 1)
   in let sum n = if n=0 then 1 else (pow n) + sum(n - 1)
     in sum 11
@@ -149,7 +149,7 @@ let Question4_2_3_String = @"
 
 
 // Question 4.2.4:
-let Question4_2_4_String = @"
+let s4 = @"
   let sum8Time n = n*n*n*n*n*n*n*n
   in let sum n = if n = 1 then 0 else (sum8Time n) + sum(n - 1)
     in sum 10
@@ -162,11 +162,31 @@ let Question4_2_4_String = @"
 //    EXERCISE 4.3    //
 //                    //
 ////////////////////////
-
-let e1 = @"let pow x n = if n=0 then 1 else x * pow x (n-1) in pow 3 8 end";;
+let e1 = @"
+  let pow x n = if n=0 then 1 else x * pow x (n-1)
+  in pow 3 8
+end";;
 
 let e2 = @"
 let max2 a b = if a<b then b else a
     in let max3 a b c = max2 a (max2 b c)
   in max3 25 6 62 end
 end";;
+
+////////////////////////
+//                    //
+//    EXERCISE 4.5    //
+//                    //
+////////////////////////
+// true true = 1
+// true false OR false true = 2
+// false false = 0
+let e3 = @"
+  let logicTest a b =
+    if a && b then 1
+    else
+      if a || b then 2
+      else 0
+  in logicTest true false
+end";;
+
