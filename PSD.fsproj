@@ -12,21 +12,29 @@
     <Compile Include="./Assignment_01/IntComp.fs" />
   </ItemGroup>
 
+<!--  <ItemGroup>-->
+<!--    <Compile Include="./Assignment_02/Absyn.fs" />-->
+<!--    <Compile Include="./Assignment_02/Expr.fs" />-->
+<!--    <Compile Include="./Assignment_02/ExprPar.fs" />-->
+<!--    <Compile Include="./Assignment_02/ExprLex.fs" />-->
+<!--    <Compile Include="./Assignment_02/Parse.fs" />-->
+<!--  </ItemGroup>-->
+
   <ItemGroup>
-    <Compile Include="./Assignment_02/Absyn.fs" />
-    <Compile Include="./Assignment_02/Expr.fs" />
-    <Compile Include="./Assignment_02/ExprPar.fs" />
-    <Compile Include="./Assignment_02/ExprLex.fs" />
-    <Compile Include="./Assignment_02/Parse.fs" />
+      <Compile Include="./Assignment_04/Absyn.fs" />
+      <Compile Include="./Assignment_04/FunPar.fs" />
+      <Compile Include="./Assignment_04/FunLex.fs" />
+      <Compile Include="./Assignment_04/Parse.fs" />
+      <Compile Include="./Assignment_04/Fun.fs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+      <Reference Include="./fsharp/FsLexYacc.Runtime.dll" />
   </ItemGroup>
 
-    <ItemGroup>
-        <Reference Include="./fsharp/FsLexYacc.Runtime.dll" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="Assignment_02\.zshrc" />
-      <Content Include="Assignment_02\Machine.java" />
-    </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assignment_02\.zshrc" />
+    <Content Include="Assignment_02\Machine.java" />
+  </ItemGroup>
 
 </Project>

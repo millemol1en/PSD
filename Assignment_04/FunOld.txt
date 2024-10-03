@@ -1,0 +1,201 @@
+module FunOld
+
+
+(* File Fun/Fun.fs
+   A strict functional language with integers and first-order 
+   one-argument functions * sestoft@itu.dk
+
+   Does not support mutually recursive function bindings.
+
+   Performs tail recursion in constant space (because F# does).
+*)
+
+open Absyn
+open Parse
+
+(* Environment operations *)
+
+type 'v env = (string * 'v) list
+
+let rec lookup env x =
+    match env with 
+    | []        -> failwith (x + " not found")
+    | (y, v)::r -> if x=y then v else lookup r x;;
+
+(* A runtime value is an integer or a function closure *)
+
+type value = 
+  | Int of int
+  | Closure of string * string * expr * value env       (* (f, x, fBody, fDeclEnv) *)
+
+let rec eval (e : expr) (env : value env) : int =
+    match e with 
+    | CstI i -> i
+    | CstB b -> if b then 1 else 0
+    | Var x  ->
+      match lookup env x with
+      | Int i -> i 
+      | _     -> failwith "eval Var"
+    | Prim(ope, e1, e2) -> 
+      let i1 = eval e1 env
+      let i2 = eval e2 env
+      match ope with
+      | "*" -> i1 * i2
+      | "+" -> i1 + i2
+      | "-" -> i1 - i2
+      | "=" -> if i1 = i2 then 1 else 0
+      | "<" -> if i1 < i2 then 1 else 0
+      | _   -> failwith ("unknown primitive " + ope)
+    | Let(x, eRhs, letBody) -> 
+      let xVal = Int(eval eRhs env)
+      let bodyEnv = (x, xVal) :: env
+      eval letBody bodyEnv
+    | If(e1, e2, e3) -> 
+      let b = eval e1 env
+      if b<>0 then eval e2 env
+      else eval e3 env
+    | Letfun(f, x, fBody, letBody) -> 
+      let bodyEnv = (f, Closure(f, x, fBody, env)) :: env 
+      eval letBody bodyEnv
+    | Call(Var f, eArg) -> 
+      let fClosure = lookup env f
+      match fClosure with
+      | Closure (f, x, fBody, fDeclEnv) ->
+        let xVal = Int(eval eArg env)
+        let fBodyEnv = (x, xVal) :: (f, fClosure) :: fDeclEnv
+        eval fBody fBodyEnv
+      | _ -> failwith "eval Call: not a function"
+    | Call _ -> failwith "eval Call: not first-order function"
+
+(* Evaluate in empty environment: program must have no free variables: *)
+
+let run e = eval e [];;
+
+(* Examples in abstract syntax *)
+
+let ex1 = Letfun("f1", "x", Prim("+", Var "x", CstI 1), 
+                 Call(Var "f1", CstI 12));;
+
+(* Example: factorial *)
+
+let ex2 = Letfun("fac", "x",
+                 If(Prim("=", Var "x", CstI 0),
+                    CstI 1,
+                    Prim("*", Var "x", 
+                              Call(Var "fac", 
+                                   Prim("-", Var "x", CstI 1)))),
+                 Call(Var "fac", Var "n"));;
+
+(* let fac10 = eval ex2 [("n", Int 10)];; *)
+
+(* Example: deep recursion to check for constant-space tail recursion *)
+
+let ex3 = Letfun("deep", "x", 
+                 If(Prim("=", Var "x", CstI 0),
+                    CstI 1,
+                    Call(Var "deep", Prim("-", Var "x", CstI 1))),
+                 Call(Var "deep", Var "count"));;
+    
+let rundeep n = eval ex3 [("count", Int n)];;
+
+(* Example: static scope (result 14) or dynamic scope (result 25) *)
+
+let ex4 =
+    Let("y", CstI 11,
+        Letfun("f", "x", Prim("+", Var "x", Var "y"),
+               Let("y", CstI 22, Call(Var "f", CstI 3))));;
+
+(* Example: two function definitions: a comparison and Fibonacci *)
+
+let ex5 = 
+    Letfun("ge2", "x", Prim("<", CstI 1, Var "x"),
+           Letfun("fib", "n",
+                  If(Call(Var "ge2", Var "n"),
+                     Prim("+",
+                          Call(Var "fib", Prim("-", Var "n", CstI 1)),
+                          Call(Var "fib", Prim("-", Var "n", CstI 2))),
+                     CstI 1), Call(Var "fib", CstI 25)));;
+
+
+////////////////////////
+//                    //
+//    EXERCISE 4.2    //
+//                    //
+////////////////////////
+
+(*
+
+Exercise 4.2 Write more example programs in the functional language, and test
+them:
+  • Compute the sum of the numbers from 1000 down to 1. Do this by defining a
+    function sum n that computes the sum n + (n − 1) +···+ 2 + 1. (Use straightforward summation, no clever tricks.)
+  • Compute the number 38, that is, 3 raised to the power 8. Again, use a recursive
+    function.
+  • Compute 30 + 31 +···+ 310 + 311, using a recursive function (or two, if you
+    prefer).
+  • Compute 18 + 28 +···+ 108, again using a recursive function (or two).
+
+*)
+
+//////// QUESTION 4.2.1 //////////////
+
+
+let Question4_2_1_String = @"
+  let sum n = if n=0 then 0 else n + sum(n-1)
+  in sum 1000 end
+";;
+
+let Question4_2_1_Expr = fromString Question4_2_1_String
+
+let q4_2_1 = 
+    Letfun("sum", "n", If
+       (Prim ("=", Var "n", CstI 0), CstI 0,
+        Prim ("+", Var "n", Call (Var "sum", Prim ("-", Var "n", CstI 1)))),
+    Call (Var "sum", CstI 1000))
+
+// let sum (n : int)    
+
+let Question4_2_2_String = @"
+  let pow n = if n = 0 then 1 else 3 * pow (n - 1)
+  in pow 8 end
+";;
+
+let Question4_2_2_Expr =
+    Letfun ("pow", "n",
+        If
+       (Prim ("=", Var "n", CstI 0), CstI 1,
+        Prim ("*", CstI 3, Call (Var "pow", Prim ("-", Var "n", CstI 1)))),
+     Call (Var "pow", CstI 8))
+
+
+let Question4_2_3_String = @"
+  let pow n = if n = 0 then 1 else 3 * pow (n - 1)
+  in let sum n = if n=0 then 1 else (pow n) + sum(n - 1)
+    in sum 11
+    end
+  end
+";;
+
+let Question4_2_3_Expr =
+    Letfun ("pow", "n",
+     If
+       (Prim ("=", Var "n", CstI 0), CstI 1,
+        Prim ("*", CstI 3, Call (Var "pow", Prim ("-", Var "n", CstI 1)))),
+     Letfun
+       ("sum", "n",
+        If
+          (Prim ("=", Var "n", CstI 0), CstI 1,
+           Prim
+             ("+", Call (Var "pow", Var "n"),
+              Call (Var "sum", Prim ("-", Var "n", CstI 1)))),
+        Call (Var "sum", CstI 11)));;
+
+
+//! NOTE: This is NOT done!
+let Question4_2_4_String = @"
+  let pow n = if n = 0 then 1 else 8 * pow (n - 1)
+  in let sum n = if n = 10 then (pow n) else (pow n) + sum(n + 1)
+    in sum 1
+    end
+  end
+";;
