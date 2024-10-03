@@ -35,6 +35,8 @@
   <ItemGroup>
     <Content Include="Assignment_02\.zshrc" />
     <Content Include="Assignment_02\Machine.java" />
+    <Compile Include="Assignment_05\Exercise_5.1.fs" />
+    <Compile Include="Assignment_05\TypedFun.fs" />
   </ItemGroup>
 
 </Project>
