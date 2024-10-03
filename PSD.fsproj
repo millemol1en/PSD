@@ -33,18 +33,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Assignment_05\Exercise_5.1.fs" />
-    <Compile Include="Assignment_05\TypedFun.fs" />
-    <Compile Include="Assignment_05\TypeInference.fs" />
-    <Compile Include="Assignment_05\ParseAndType.fs" />
-    <Compile Include="Assignment_05\ParseAndRunHigher.fs" />
-    <Compile Include="Assignment_05\HigherFun.fs" />
-    <Compile Include="Assignment_05\Absyn.fs" />
-    <Compile Include="Assignment_05\Parse.fs" />
-    <Compile Include="Assignment_05\Util.fs" />
-    <Content Include="Assignment_05\FunPar.fsy" />
-    <Content Include="Assignment_05\FunLex.fsl" />
-    <Content Include="Assignment_05\.zshrc" />
+    <Compile Include="./Assignment_05/Absyn.fs" />
+    <Compile Include="./Assignment_05/Util.fs" />
+    <Content Include="./Assignment_05/FunLex.fs" />
+    <Content Include="./Assignment_05/FunPar.fs" />
+    <Compile Include="./Assignment_05/HigherFun.fs" />
+    <Compile Include="./Assignment_05/Parse.fs" />
+    <Compile Include="./Assignment_05/ParseAndRunHigher.fs" />
+    <Compile Include="./Assignment_05/ParseAndType.fs" />
+    <Compile Include="./Assignment_05/TypeInference.fs" />
+    <Compile Include="./Assignment_05/Exercise_5.1.fs" />
+    <Compile Include="./Assignment_05/TypedFun.fs" />
+    
+    
+    
+    
+    
   </ItemGroup>
 
 </Project>
