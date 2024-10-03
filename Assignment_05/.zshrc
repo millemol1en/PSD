@@ -1,3 +1,6 @@
 alias fslex="dotnet ../fsharp/fslex.dll"
 alias fsyacc="dotnet ../fsharp/fsyacc.dll"
+alias setpar="dotnet ../fsharp/fsyacc.dll --module FunPar ./FunPar.fsy"
+alias setlex="dotnet ../fsharp/fslex.dll --unicode ./FunLex.fsl"
 alias run="dotnet fsi -r ../fsharp/FsLexYacc.Runtime.dll Util.fs Absyn.fs FunPar.fs FunLex.fs Parse.fs HigherFun.fs ParseAndRunHigher.fs"
+alias clean="rm FunLex.fs FunLex.fsi FunPar.fs FunPar.fsi"

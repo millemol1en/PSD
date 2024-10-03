@@ -60,8 +60,11 @@ let ex9 =
        in let twototen = (rep 10) mul3 
        in twototen 7 end end end";;
 
-//Exercise 6.1
-
+////////////////////////
+//                    //
+//    EXERCISE 6.1    //
+//                    //
+////////////////////////
 let ex10 = 
     Parse.fromString 
     @"let add x = let f y = x+y in f end
@@ -82,3 +85,15 @@ let ex12 =
                 in let x = 77 in addtwo 5 end 
             end
         end"
+        
+//////////////////////////////
+//                          //
+//    EXERCISE 6.2 / 6.3    //
+//                          //
+//////////////////////////////
+
+let ex13 = @"let add x = fun y -> x+y
+in add 2 5 end"
+
+let ex14 = @"let add = fun x -> fun y -> x+y
+in add 2 5 end"
