@@ -1,4 +1,4 @@
-module PSD.Assignment_05.TypedFun
+module TypedFun
 
 (* File TypedFun/TypedFun.fs
    An explicitly typed strict first-order functional language. 
@@ -37,7 +37,7 @@ type typ =
   | TypI                                (* int                         *)
   | TypB                                (* bool                        *)
   | TypF of typ * typ                   (* (argumenttype, resulttype)  *)
-  | TypL of typ
+  | TypL of typ                         (* list, element type if typ *)
 
 (* New abstract syntax with explicit types, instead of Absyn.expr: *)
 
@@ -139,7 +139,15 @@ let rec typ (e : tyexpr) (env : typ env) : typ =
         if typ eArg env = xTyp then rTyp
         else failwith "Call: wrong argument type"
       | _ -> failwith "Call: unknown function"
+    | ListExpr(list, listType) ->
+        let elements = List.filter (fun x -> (typ x env) = listType) list
+        if elements.Length < list.Length then
+          failwith "Call: Wrong list type"
+        else
+          TypL listType
+      
     | Call(_, eArg) -> failwith "Call: illegal function in call"
+    //ListExpr of tyexpr list * typ
 
 let typeCheck e = typ e [];;
 
