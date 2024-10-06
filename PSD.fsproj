@@ -40,8 +40,8 @@
     <Compile Include="./Assignment_05/HigherFun.fs" />
     <Compile Include="./Assignment_05/Parse.fs" />
     <Compile Include="./Assignment_05/ParseAndRunHigher.fs" />
-    <Compile Include="./Assignment_05/ParseAndType.fs" />
     <Compile Include="./Assignment_05/TypeInference.fs" />
+    <Compile Include="./Assignment_05/ParseAndType.fs" />
     <Compile Include="./Assignment_05/Exercise_5.1.fs" />
     <Compile Include="./Assignment_05/TypedFun.fs" />
     

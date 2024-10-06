@@ -132,3 +132,99 @@ let id x = x in
   end
 end
               ");;
+
+//////////////////////////////
+//                          //
+//    EXERCISE 6.5          //
+//                          //
+//////////////////////////////
+// PART 1
+let q6_5_i = fromString @"let f x = 1
+in f f end";;
+
+// Running Q6.5.i gives us the type of integer
+
+let q6_5_ii = fromString @"let f g = g g
+in f end";;
+
+// Running Q6.5.ii results in a System.Exception: type error: circularity.
+// This is due to the fact that our language can't infer the type where none is given, we are simply using functions
+// and no primitive values. 
+
+let q6_5_iii = fromString @"let f x =
+let g y = y
+in g false end
+in f 42 end";;
+
+// Running Q6.5.iii gives us the type of boolean
+
+let q6_5_iv = fromString @"let f x =
+let g y = if true then y else x
+in g false end
+in f 42 end";;
+
+// Running Q6.5.iv gives us another System.Exception this being a type error between bool and int.
+
+let q6_5_v = fromString @"let f x =
+let g y = if true then y else x
+in g false end
+in f true end";;
+
+// Running Q6.5.iv gives us a type of boolean
+
+// PART 2
+
+// Type is (bool -> bool)
+let q6_5_vi = fromString @"let f x = if x = true then true else false in f end";;
+
+// Type is (int -> int)
+let q6_5_vii = fromString @"let f x = x + 2 in f end";;
+
+// Type is "(int -> (int -> int))"
+let q6_5_viii = fromString @"
+  let f x =
+      let y z = z + x
+      in y end
+  in f end
+";;
+
+// Type is "('h -> ('g -> 'h))" OR "('a -> ('b -> 'a))"
+let q6_5_ix = fromString @"
+  let f x = 
+    let g y = x
+    in g end
+  in f end
+";;
+
+// Type is  "('g -> ('h -> 'h))"
+let q6_5_x = fromString @"
+  let f x = 
+    let g y = y
+    in g end
+  in f end
+";;
+
+// Type is "(('l -> 'k) -> (('k -> 'm) -> ('l -> 'm)))"
+let q6_5_xi = fromString @"
+  let f x =
+    let g y =
+      let h z = y (x z)
+      in h end
+    in g end
+  in f end
+";;
+
+// Type is "('e -> 'f)"
+let q6_5_xii = fromString @"
+  let f x =
+    let g =
+      f x
+    in g end
+  in f end
+";;
+
+// Type is "'e"
+let q6_5_xiii = fromString @"
+  let f x = f 69
+  in f 96 end
+";;

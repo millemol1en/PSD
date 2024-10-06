@@ -86,14 +86,23 @@ let ex12 =
             end
         end"
         
+let q6_2_i = 
+    fromString
+        @"fun x -> 2*x"
+
+let q6_2_ii =
+    fromString  
+        @"let y = 22 in fun z -> z+y end"
+
+        
 //////////////////////////////
 //                          //
-//    EXERCISE 6.2 / 6.3    //
+//    EXERCISE 6.3          //
 //                          //
 //////////////////////////////
 
-let ex13 = @"let add x = fun y -> x+y
+let q6_3_i = @"let add x = fun y -> x+y
 in add 2 5 end"
 
-let ex14 = @"let add = fun x -> fun y -> x+y
+let q6_3_ii = @"let add = fun x -> fun y -> x+y
 in add 2 5 end"
