@@ -1,4 +1,7 @@
+using PSD_Csharp.Assignment_05;
+
 namespace PSD_Csharp.Assignment_01;
+
 
 ///////////////////////////
 ///                     ///
@@ -150,6 +153,14 @@ class Program
         var res = myExpr.eval(env);
         Console.WriteLine(res);
 
+        int[] xs = { 3, 5, 12 };
+        int[] ys = { 2, 3, 4, 7 };
+        
+        int[] newArr = Exercise5_1.merge(xs, ys);
 
+        foreach (var i in newArr)
+        {
+            Console.WriteLine(i);
+        }
     }
 }
