@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <ProjectReference Include="Assignment_01\Assignment_01.fsproj" />-->
     <Compile Include="./Assignment_01/Intro2.fs" />
     <Compile Include="./Assignment_01/IntComp.fs" />
     <Compile Include="./Assignment_01/IntComp.fs" />
@@ -27,28 +26,35 @@
 <!--      <Compile Include="./Assignment_04/Parse.fs" /> -->
 <!--      <Compile Include="./Assignment_04/Fun.fs" /> -->
 <!--  </ItemGroup> -->
-  
-  <ItemGroup>
-      <Reference Include="./fsharp/FsLexYacc.Runtime.dll" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="./Assignment_05/Absyn.fs" />
-    <Compile Include="./Assignment_05/Util.fs" />
-    <Content Include="./Assignment_05/FunLex.fs" />
-    <Content Include="./Assignment_05/FunPar.fs" />
-    <Compile Include="./Assignment_05/HigherFun.fs" />
-    <Compile Include="./Assignment_05/Parse.fs" />
-    <Compile Include="./Assignment_05/ParseAndRunHigher.fs" />
-    <Compile Include="./Assignment_05/TypeInference.fs" />
-    <Compile Include="./Assignment_05/ParseAndType.fs" />
-    <Compile Include="./Assignment_05/Exercise_5.1.fs" />
-    <Compile Include="./Assignment_05/TypedFun.fs" />
-    
-    
-    
-    
-    
-  </ItemGroup>
+<!--  <ItemGroup>-->
+<!--    <Compile Include="./Assignment_05/Absyn.fs" />-->
+<!--    <Compile Include="./Assignment_05/Util.fs" />-->
+<!--    <Content Include="./Assignment_05/FunLex.fs" />-->
+<!--    <Content Include="./Assignment_05/FunPar.fs" />-->
+<!--    <Compile Include="./Assignment_05/HigherFun.fs" />-->
+<!--    <Compile Include="./Assignment_05/Parse.fs" />-->
+<!--    <Compile Include="./Assignment_05/ParseAndRunHigher.fs" />-->
+<!--    <Compile Include="./Assignment_05/TypeInference.fs" />-->
+<!--    <Compile Include="./Assignment_05/ParseAndType.fs" />-->
+<!--    <Compile Include="./Assignment_05/Exercise_5.1.fs" />-->
+<!--    <Compile Include="./Assignment_05/TypedFun.fs" />-->
+<!--  </ItemGroup>-->
 
+    <ItemGroup>
+      <Compile Include="./Assignment_06/Absyn.fs" />
+      <Compile Include="./Assignment_06/Util.fs" />
+      <Compile Include="./Assignment_06/Interp.fs" />
+      <Compile Include="./Assignment_06/CLex.fs" />
+      <Compile Include="./Assignment_06/CPar.fs" />
+      <Compile Include="./Assignment_06/Parse.fs" />
+      <Compile Include="./Assignment_06/ParseAndComp.fs" />
+      <Compile Include="./Assignment_06/ParseAndContcomp.fs" />
+      <Compile Include="./Assignment_06/ParseAndRun.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="./fsharp/FsLexYacc.Runtime.dll" />
+    </ItemGroup>
+    
 </Project>
