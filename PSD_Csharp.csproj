@@ -4,6 +4,12 @@
     <ProjectReference Include="PSD.fsproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ClCompile Include="Assignment_06\MicroC\Exercises\ex7_2_i.c" />
+    <ClCompile Include="Assignment_06\MicroC\Exercises\ex7_2_ii.c" />
+    <ClCompile Include="Assignment_06\MicroC\Exercises\ex7_2_iii.c" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
