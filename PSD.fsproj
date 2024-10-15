@@ -42,15 +42,15 @@
 <!--  </ItemGroup>-->
 
     <ItemGroup>
-      <Compile Include="./Assignment_06/Absyn.fs" />
-      <Compile Include="./Assignment_06/Util.fs" />
-      <Compile Include="./Assignment_06/Interp.fs" />
-      <Compile Include="./Assignment_06/CLex.fs" />
-      <Compile Include="./Assignment_06/CPar.fs" />
-      <Compile Include="./Assignment_06/Parse.fs" />
-      <Compile Include="./Assignment_06/ParseAndComp.fs" />
-      <Compile Include="./Assignment_06/ParseAndContcomp.fs" />
-      <Compile Include="./Assignment_06/ParseAndRun.fs" />
+      <Compile Include="./Assignment_06/MicroC/Absyn.fs" />
+      <Compile Include="./Assignment_06/MicroC/Util.fs" />
+      <Compile Include="./Assignment_06/MicroC/CLex.fs" />
+      <Compile Include="./Assignment_06/MicroC/CPar.fs" />
+      <Compile Include="./Assignment_06/MicroC/Interp.fs" />
+      <Compile Include="./Assignment_06/MicroC/Parse.fs" />
+      <Compile Include="./Assignment_06/MicroC/ParseAndComp.fs" />
+      <Compile Include="./Assignment_06/MicroC/ParseAndContcomp.fs" />
+      <Compile Include="./Assignment_06/MicroC/ParseAndRun.fs" />
     </ItemGroup>
 
     <ItemGroup>

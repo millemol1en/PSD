@@ -165,6 +165,10 @@ and eval e locEnv gloEnv store : int * store =
       let res =
           match ope with
           | "!"      -> if i1=0 then 1 else 0
+          // This was the initial attempt - seemed more intuitive. But this wouldn't allow us to perform the action in
+          // varying contexts such as pointer, in arrays, etc...
+          // | "++"     -> i1 + 1   
+          // | "--"     -> i1 - 1
           | "printi" -> (printf "%d " i1; i1)
           | "printc" -> (printf "%c" (char i1); i1)
           | _        -> failwith ("unknown primitive " + ope)
@@ -187,6 +191,16 @@ and eval e locEnv gloEnv store : int * store =
           | ">"  -> if i1 >  i2 then 1 else 0
           | _    -> failwith ("unknown primitive " + ope)
       (res, store2) 
+    (* Exercise 7.4 *)
+    // The type we are receiving is "access". This is crucial 
+    | PreInc(acc) ->
+      let (addr, store) = access acc locEnv gloEnv store        // This line gets the address and 
+      let newVal = (getSto store addr) + 1                      // We then get the value stored at the address and update it
+      (newVal, setSto store addr newVal)
+    | PreDec(acc) ->
+      let (addr, store) = access acc locEnv gloEnv store        // We retrieve 
+      let newVal = (getSto store addr) - 1                      // We then get the value stored at the address and update it
+      (newVal, setSto store addr newVal)
     | Andalso(e1, e2) -> 
       let (i1, store1) as res = eval e1 locEnv gloEnv store
       if i1<>0 then eval e2 locEnv gloEnv store1 else res
