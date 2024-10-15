@@ -54,9 +54,13 @@ rule Token = parse
   | '+'             { PLUS } 
   | '-'             { MINUS } 
   | "++"            { PREINC } 
-  | "--"            { PREDEC } 
+  | "--"            { PREDEC }
   | '*'             { TIMES } 
   | '/'             { DIV } 
+  | "+="            { PLUSEQ }
+  | "-="            { MINUSEQ }
+  | "*="            { TIMESEQ } 
+  | "/="            { DIVEQ }
   | '%'             { MOD }                     
   | '='             { ASSIGN } 
   | "=="            { EQ } 

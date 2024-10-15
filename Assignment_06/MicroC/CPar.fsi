@@ -28,6 +28,10 @@ type token =
   | MOD
   | PREINC
   | PREDEC
+  | PLUSEQ
+  | MINUSEQ
+  | TIMESEQ
+  | DIVEQ
   | CHAR
   | ELSE
   | IF
@@ -71,6 +75,10 @@ type tokenId =
     | TOKEN_MOD
     | TOKEN_PREINC
     | TOKEN_PREDEC
+    | TOKEN_PLUSEQ
+    | TOKEN_MINUSEQ
+    | TOKEN_TIMESEQ
+    | TOKEN_DIVEQ
     | TOKEN_CHAR
     | TOKEN_ELSE
     | TOKEN_IF
