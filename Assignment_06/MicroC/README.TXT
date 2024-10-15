@@ -16,7 +16,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
    run (fromFile "ex1.c") [17];;
    run (fromFile "ex5.c") [4];;
    run (fromFile "ex11.c") [8];;
-
+   run (fromFile "some_file.c") [];;    // Use this when you need to run a 'main' function without any arguments. 
 
 B. To compile and use the micro-C compiler
 
