@@ -26,6 +26,7 @@ and expr =
   | PreInc of access
   | PreDec of access
   | OpEq of string * access * expr            (* Question 7.6 *)
+  | Cond of expr * expr * expr                (* Question 7.7 *)
                                                                    
 and access =                                                       
   | AccVar of string                 (* Variable access        x    *) 

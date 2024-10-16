@@ -5,11 +5,11 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="./Assignment_01/Intro2.fs" />
-    <Compile Include="./Assignment_01/IntComp.fs" />
-    <Compile Include="./Assignment_01/IntComp.fs" />
-  </ItemGroup>
+<!--  <ItemGroup>-->
+<!--    <Compile Include="./Assignment_01/Intro2.fs" />-->
+<!--    <Compile Include="./Assignment_01/IntComp.fs" />-->
+<!--    <Compile Include="./Assignment_01/IntComp.fs" />-->
+<!--  </ItemGroup>-->
 
 <!--  <ItemGroup>-->
 <!--    <Compile Include="./Assignment_02/Absyn.fs" />-->
@@ -44,8 +44,11 @@
     <ItemGroup>
       <Compile Include="./Assignment_06/MicroC/Absyn.fs" />
       <Compile Include="./Assignment_06/MicroC/Util.fs" />
-      <Compile Include="./Assignment_06/MicroC/CLex.fs" />
+      <Compile Include="./Assignment_06/MicroC/Machine.fs" />
+      <Compile Include="./Assignment_06/MicroC/Comp.fs" />
+      <Compile Include="./Assignment_06/MicroC/Contcomp.fs" />
       <Compile Include="./Assignment_06/MicroC/CPar.fs" />
+      <Compile Include="./Assignment_06/MicroC/CLex.fs" />
       <Compile Include="./Assignment_06/MicroC/Interp.fs" />
       <Compile Include="./Assignment_06/MicroC/Parse.fs" />
       <Compile Include="./Assignment_06/MicroC/ParseAndComp.fs" />

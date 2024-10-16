@@ -201,15 +201,16 @@ and eval e locEnv gloEnv store : int * store =
       let (addr, store) = access acc locEnv gloEnv store        
       let newVal = (getSto store addr) - 1                      
       (newVal, setSto store addr newVal)
+    (* Exercise 7.6 *)
     | OpEq(ope, acc, e) ->   // 'e' is the expression on our RHS of a statement like "x += 5"...
-      // [S.1] We first 
+      // [S.1] First get the address and its associated value:
       let (addr, accStore) = access acc locEnv gloEnv store
       let storedValue = (getSto accStore addr)
       
-      // [S.2] Determine the value of the expression being added to the LHS variable:
+      // [S.2] Determine the value of the expression we are working with:
       let (expVal, expStore) = eval e locEnv gloEnv store
       
-      // [S.3] 
+      // [S.3] Determine which operation to perform:
       let newVal =
           match ope with
           | "+=" -> storedValue + expVal
@@ -219,7 +220,12 @@ and eval e locEnv gloEnv store : int * store =
           | _ -> failwith ("unknown primitive " + ope)
       
       (newVal, setSto store addr newVal)
-      
+    (* Exercise 7.7 *)
+    | Cond(e1, e2, e3) ->
+        let (v, store1) = eval e1 locEnv gloEnv store
+
+        if v<>0  then eval e2 locEnv gloEnv store1
+                 else eval e3 locEnv gloEnv store1
     | Andalso(e1, e2) -> 
       let (i1, store1) as res = eval e1 locEnv gloEnv store
       if i1<>0 then eval e2 locEnv gloEnv store1 else res

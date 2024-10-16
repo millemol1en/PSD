@@ -72,13 +72,15 @@ rule Token = parse
   | "||"            { SEQOR }                     
   | "&&"            { SEQAND }                     
   | "&"             { AMP }                     
-  | "!"             { NOT }                     
+  | "!"             { NOT }  
+  | "?"             { QMARK }                 
   | '('             { LPAR }
   | ')'             { RPAR }
   | '{'             { LBRACE }
   | '}'             { RBRACE }
   | '['             { LBRACK }
   | ']'             { RBRACK }
+  | ":"             { COLON }  
   | ';'             { SEMI }
   | ','             { COMMA }
   | "//"            { EndLineComment lexbuf; Token lexbuf }
