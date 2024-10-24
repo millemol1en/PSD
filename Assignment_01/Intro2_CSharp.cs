@@ -127,7 +127,9 @@ class Sub : Binop
 
 class Program
 {
-    static void Main()
+    // Removed Main functions entry point
+
+    public static void Run()
     {
         Expr e1 = new Add(new CstI(17),new Sub(new Var("x"), new Var("y")));
         Expr e2 = new Mul(new CstI(17), new CstI(3));
