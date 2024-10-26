@@ -208,7 +208,7 @@ and eval e locEnv gloEnv store : int * store =
       let storedValue = (getSto accStore addr)
       
       // [S.2] Determine the value of the expression we are working with:
-      let (expVal, expStore) = eval e locEnv gloEnv store
+      let (expVal, _) = eval e locEnv gloEnv store
       
       // [S.3] Determine which operation to perform:
       let newVal =
