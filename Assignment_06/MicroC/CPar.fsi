@@ -45,6 +45,8 @@ type token =
   | VOID
   | WHILE
   | FOR
+  | SWITCH
+  | CASE
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTINT of (int)
@@ -94,6 +96,8 @@ type tokenId =
     | TOKEN_VOID
     | TOKEN_WHILE
     | TOKEN_FOR
+    | TOKEN_SWITCH
+    | TOKEN_CASE
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTINT
@@ -117,6 +121,7 @@ type nonTerminalId =
     | NONTERM_StmtU
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
+    | NONTERM_Case
     | NONTERM_AtExprNotAccess
     | NONTERM_Access
     | NONTERM_Exprs

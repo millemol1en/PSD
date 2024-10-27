@@ -14,7 +14,7 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE FOR SWITCH
+%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE FOR SWITCH CASE
 %token PLUS MINUS TIMES DIV MOD PREINC PREDEC PLUSEQ MINUSEQ TIMESEQ DIVEQ
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND QMARK COLON
@@ -23,11 +23,12 @@ let nl = CstI 10
 
 %right ASSIGN             /* lowest precedence */
 %nonassoc PRINT
+%right QMARK COLON
 %left SEQOR
 %left SEQAND
 %left EQ NE 
 %left GT LT GE LE
-%left PREINC PREDEC QMARK COLON
+%left PREINC PREDEC
 %left PLUS MINUS TIMES DIV MOD 
 %left PLUSEQ MINUSEQ TIMESEQ DIVEQ
 %nonassoc NOT AMP 
@@ -146,6 +147,7 @@ ExprNotAccess:
 ;
 
 Case:
+                                        { [] }
   | CASE CSTINT COLON Block Case        { ($2, $4) :: $5      }
 
 AtExprNotAccess:
