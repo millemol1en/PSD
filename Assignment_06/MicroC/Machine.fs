@@ -45,7 +45,7 @@ type instr =
   | STOP                               (* halt the abstract machine       *)
 
 (* Generate new distinct labels *)
-
+// The ones which look like: "L1", "L2", etc...
 let (resetLabels, newLabel) = 
     let lastlab = ref -1
     ((fun () -> lastlab := 0), (fun () -> (lastlab := 1 + !lastlab; "L" + (!lastlab).ToString())))

@@ -14,19 +14,20 @@ type typ =
   | TypP of typ                      (* Pointer type                *)
                                                                    
 and expr =                                                         
-  | Access of access                 (* x    or  *p    or  a[e]     *)
-  | Assign of access * expr          (* x=e  or  *p=e  or  a[e]=e   *)
-  | Addr of access                   (* &x   or  &*p   or  &a[e]    *)
-  | CstI of int                      (* Constant                    *)
-  | Prim1 of string * expr           (* Unary primitive operator    *)
-  | Prim2 of string * expr * expr    (* Binary primitive operator   *)
-  | Andalso of expr * expr           (* Sequential and              *)
-  | Orelse of expr * expr            (* Sequential or               *)
-  | Call of string * expr list       (* Function call f(...)        *)
+  | Access of access                   (* x    or  *p    or  a[e]     *)
+  | Assign of access * expr            (* x=e  or  *p=e  or  a[e]=e   *)
+  | Addr of access                     (* &x   or  &*p   or  &a[e]    *)
+  | CstI of int                        (* Constant                    *)
+  | Prim1 of string * expr             (* Unary primitive operator    *)
+  | Prim2 of string * expr * expr      (* Binary primitive operator   *)
+  | Andalso of expr * expr             (* Sequential and              *)
+  | Orelse of expr * expr              (* Sequential or               *)
+  | Call of string * expr list         (* Function call f(...)        *)
   | PreInc of access
   | PreDec of access
-  | OpEq of string * access * expr            (* Question 7.6 *)
-  | Cond of expr * expr * expr                (* Question 7.7 *)
+  | OpEq of string * access * expr     (* Question 7.6 *)
+  | Cond of expr * expr * expr         (* Question 7.7 && Question 8.5 *)  
+ 
                                                                    
 and access =                                                       
   | AccVar of string                 (* Variable access        x    *) 
@@ -34,11 +35,12 @@ and access =
   | AccIndex of access * expr        (* Array indexing         a[e] *)
                                                                    
 and stmt =                                                         
-  | If of expr * stmt * stmt         (* Conditional                 *)
-  | While of expr * stmt             (* While loop                  *)
-  | Expr of expr                     (* Expression statement   e;   *)
-  | Return of expr option            (* Return from method          *)
-  | Block of stmtordec list          (* Block: grouping and scope   *)
+  | If of expr * stmt * stmt           (* Conditional                 *)
+  | While of expr * stmt               (* While loop                  *)
+  | Expr of expr                       (* Expression statement   e;   *)
+  | Return of expr option              (* Return from method          *)
+  | Block of stmtordec list            (* Block: grouping and scope   *)
+  | Switch of expr * (int * stmt) list (* Question 8.6 *)
                                                                    
 and stmtordec =                                                    
   | Dec of typ * string              (* Local variable declaration  *)
