@@ -205,6 +205,20 @@ and cExpr (e : expr) (varEnv : varEnv) (funEnv : funEnv) : instr list =
       @ [IFNZRO labtrue]
       @ cExpr e2 varEnv funEnv
       @ [GOTO labend; Label labtrue; CSTI 1; Label labend]
+    | PreInc(addr) -> 
+        cAccess addr varEnv funEnv @ [DUP; LDI; CSTI 1; ADD; STI]
+    | PreDec(addr) ->
+        cAccess addr varEnv funEnv @ [DUP; LDI; CSTI 1; SUB; STI]
+    | Cond(e1, e2, e3) ->
+        let labend  = newLabel()
+        let labtrue = newLabel()
+        cExpr e1 varEnv funEnv
+        @ [IFZERO labtrue]
+        @ cExpr e2 varEnv funEnv
+        @ [GOTO labend]
+        @ [Label labtrue;]
+        @ cExpr e3 varEnv funEnv
+        @ [Label labend]
     | Call(f, es) -> callfun f es varEnv funEnv
 
 (* Generate code to access variable, dereference pointer or index array.

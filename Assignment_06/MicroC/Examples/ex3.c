@@ -5,6 +5,10 @@ void main(int n) {
   i=0; 
   while (i < n) { 
     print i; 
-    i=i+1;
-  } 
+    ++i;
+  }
+
+  int m;
+  m = (n < 2) ? 66 : 10;
+  print m;
 }
