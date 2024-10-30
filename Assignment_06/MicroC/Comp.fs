@@ -159,12 +159,17 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
         // [S.4]: In conjunction with the newly added labels, we attach the instructions necessary to first perform
         //        the comparison between our 'expression' and the 'caseNumber' as well as the IFNZRO (incase it is true)
         //        to jump to the "stmt" with the corresponding Label and execute it. 
-        let casesWithJmps = List.fold (fun acc (caseNumber, _, label) -> expression @ [CSTI caseNumber; EQ; IFNZRO label] @ acc) [] casesWithLabels
+        let casesWithJmps = List.fold (fun acc (caseNumber, _, label) ->
+            expression
+            @ [CSTI caseNumber; EQ; IFNZRO label] @ acc) [] casesWithLabels
         
         // [S.5]: Here we first attach the label to each statement as well as the code to perform the execution of the statement.
         //        Finally, we have the GOTO instruction so as to jump to the end of the Switch-Case in case the case executed
         //        successfully. 
-        let casesWithStmt = List.fold (fun acc (_, block, label) -> [Label label] @ cStmt block varEnv funEnv @ [GOTO endLabel] @ acc) [] casesWithLabels
+        let casesWithStmt = List.fold (fun acc (_, block, label) ->
+            [Label label]
+            @ cStmt block varEnv funEnv
+            @ [GOTO endLabel] @ acc) [] casesWithLabels
         
         
         casesWithJmps @ casesWithStmt @ [Label endLabel]

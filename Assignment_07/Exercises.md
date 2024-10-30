@@ -1,6 +1,6 @@
-### Exercise 8.1:
+## Exercise 8.1:
 
-## i)
+### i)
 ```fsharp
 compileToFile (fromFile "./Examples/ex3.c") "./Examples/ex3.out" ;;  
 val it: Machine.instr list =
@@ -160,8 +160,8 @@ LDARGS;                     // Add the Command-line arguments to the stack
         LDI;                // Load 'i' onto the stack
         PRINTI;             // Perform print of 'i'
         INCSP -1;           // Remove the copy of 'i' from the top of the stack
-        GETBP; CSTI 1; ADD; // Get the first 'i' from "i = i + 1"
-        GETBP; CSTI 1; ADD; // Get the second 'i' from "i = i + 1"
+        GETBP; CSTI 1; ADD; // Loads one instance of the address at i - we need to for reassigning the new value of 'i'
+        GETBP; CSTI 1; ADD; // Loads a second instance of the address of 'i' - we need this for the actual calculations.
         LDI;                // Load the second i onto the stack
         CSTI 1; ADD;        // Add 1 to the element on the top of the stack, in this case, the 2nd 'i'
         STI;                // Store the result on the stack
@@ -262,3 +262,164 @@ LDARGS;
         RET 1               // Pops the return value from the stack 
 ]
 ```
+
+## Exercise 8.4:
+### File 'ex8.c'
+#### 'prog1.out'
+```fsharp
+// ex8.out:
+0 20000000 16 7 0 1 2 9 18 4 25
+
+// Prettified ex8.out:
+ 0: CSTI 20000000 
+16: GOTO 7 
+ 0: CSTI 1 
+ 2: SUB 
+ 9: DUP 
+18: IFNZRO 4 
+25: STOP
+```
+
+#### Symbolic Bytecode:
+```fsharp
+[LDARGS; 
+  CALL (0, "L1"); 
+  STOP; 
+  Label "L1"; 
+    INCSP 1; 
+    GETBP; CSTI 0; ADD;
+    CSTI 20000000; 
+    STI; 
+    INCSP -1; 
+    GOTO "L3"; 
+  Label "L2"; 
+    GETBP; CSTI 0; ADD;
+    GETBP; CSTI 0; ADD; LDI;
+    CSTI 1; 
+    SUB;
+    STI;
+    INCSP -1;
+    INCSP 0;
+  Label "L3";
+    GETBP; CSTI 0; ADD; LDI; 
+    IFNZRO "L2"; 
+    INCSP -1; 
+    RET -1
+  ]
+```
+
+The `prog.c` ...
+
+### File 'ex13.c'
+##### Generated instructions from "ex13.c"
+```fsharp
+> compile "ex13";;
+[LDARGS; 
+    CALL (1, "L1"); 
+    STOP; 
+    Label "L1"; 
+        INCSP 1; 
+        GETBP; CSTI 1; ADD;
+        CSTI 1889; 
+        STI; 
+        INCSP -1; 
+        GOTO "L3"; 
+    Label "L2"; 
+        GETBP; CSTI 1; ADD; 
+        GETBP; CSTI 1; ADD; LDI; 
+        CSTI 1; ADD; 
+        STI; 
+        INCSP -1; 
+        GETBP; CSTI 1; ADD; LDI;
+        CSTI 4; 
+        MOD; 
+        CSTI 0; 
+        EQ; 
+        IFZERO "L7"; 
+        GETBP; CSTI 1; ADD; LDI; 
+        CSTI 100;
+        MOD; 
+        CSTI 0; 
+        EQ; 
+        NOT; 
+        IFNZRO "L9"; 
+        GETBP; CSTI 1; ADD;  LDI; 
+        CSTI 400; 
+        MOD;
+        CSTI 0; 
+        EQ; 
+        GOTO "L8"; 
+    Label "L9"; 
+        CSTI 1; 
+    Label "L8"; 
+        GOTO "L6";
+    Label "L7"; 
+        CSTI 0; 
+    Label "L6"; 
+        IFZERO "L4"; 
+        GETBP; CSTI 1; ADD; LDI;
+        PRINTI; 
+        INCSP -1; 
+        GOTO "L5"; 
+    Label "L4"; 
+        INCSP 0; 
+    Label "L5"; 
+        INCSP 0;
+    Label "L3"; 
+        GETBP; CSTI 1; ADD; LDI; 
+        GETBP; CSTI 0; ADD; LDI; 
+        LT;
+        IFNZRO "L2"; 
+        INCSP -1; 
+        RET 0
+    ]
+```
+
+##### Results:
+In MicroC, `while` loops and `if-else` statements are similar in the sense that they utilize the same
+instruction types to jump around and alter the execution of code. Examples of these instructions include 
+`IFNZRO` and `IFZERO` which are used to check for whether the condition in an if-statement and or while-loop 
+holds. 
+
+
+
+## Exercise 8.5:
+The following MicroC example was run with the commands below: 
+ - "java Machine ./Exercise/ex8_5.out 4" will give  10
+ - "java Machine ./Exercise/ex8_5.out 21" will give 30
+ - "java Machine ./Exercise/ex8_5.out 19" will give 20
+
+```c++
+void main(int input)
+{
+    int n;
+    n = input < 10 ? 10 : input > 20 ? 30 : 20;
+    print n;
+}
+```
+
+
+
+## Exercise 8.6:
+The following MicroC example was run with the commands below:
+- "java Machine ./Exercise/ex8_6.out 0" will give 5
+- "java Machine ./Exercise/ex8_6.out 1" will give 10
+- "java Machine ./Exercise/ex8_6.out 2" will give 15
+
+```c++
+void main(int input)
+{
+    switch(input)
+    {
+        case 0:
+            { input = 5; }
+        case 1:
+            { input = 10; }
+        case 2:
+            { input = 15; }
+    }
+    print input;
+}
+```
+
+#### MicroC example: 
