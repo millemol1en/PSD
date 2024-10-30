@@ -264,13 +264,13 @@ LDARGS;
 ```
 
 ## Exercise 8.4:
-### File 'ex8.c'
-#### 'prog1.out'
+### Comparing 'ex8.c' to 'prog1':
+#### 'prog1':
 ```fsharp
-// ex8.out:
+// prog1:
 0 20000000 16 7 0 1 2 9 18 4 25
 
-// Prettified ex8.out:
+// Prettified prog1:
  0: CSTI 20000000 
 16: GOTO 7 
  0: CSTI 1 
@@ -280,7 +280,7 @@ LDARGS;
 25: STOP
 ```
 
-#### Symbolic Bytecode:
+#### File 'ex8.c':
 ```fsharp
 [LDARGS; 
   CALL (0, "L1"); 
@@ -294,21 +294,27 @@ LDARGS;
     GOTO "L3"; 
   Label "L2"; 
     GETBP; CSTI 0; ADD;
-    GETBP; CSTI 0; ADD; LDI;
+    GETBP; CSTI 0; ADD; 
+    LDI;
     CSTI 1; 
     SUB;
     STI;
     INCSP -1;
     INCSP 0;
   Label "L3";
-    GETBP; CSTI 0; ADD; LDI; 
+    GETBP; CSTI 0; ADD; 
+    LDI; 
     IFNZRO "L2"; 
     INCSP -1; 
     RET -1
   ]
 ```
 
-The `prog.c` ...
+The program in `prog1` runs faster because it uses considerably less instructions. Areas where this is apparent includes:
+  - `prog1` does not initialize `i` nor does it store the value of `20,000,000` in it. 
+  - There are no new scopes in `prog1`. On the other hand, `ex8.c` has 3 different label, resulting in the addition of considerably more information on the stack.
+  - The `DUP` instruction in `prog1` is used as an alternative to the verbose list of instruction in `ex8.c` to achieve the same result of imitating `i = i - 1`
+  - In `ex8.c` instructions like `GETBP; CSTI 0; ADD;` are unnecessary as it will always evaluate to `0`. However, this clutter ultimately has an impact of performance, making it run slower.
 
 ### File 'ex13.c'
 ##### Generated instructions from "ex13.c"
