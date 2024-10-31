@@ -1,0 +1,80 @@
+  public static void SelectionSort(int[]);
+    descriptor: ([I)V                  // The method accepts an integer array as a parameter and returns void
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=4, args_size=1    // Specifies max stack and local variable requirements
+         0: iconst_0                    // Load integer constant 0
+         1: istore_1                    // Store in local variable 1 (outer index i = 0)
+         2: iload_1                     // Load outer index i
+         3: aload_0                     // Load the array
+         4: arraylength                 // Get array length
+         5: if_icmpge     57            // If i >= array length, jump to 57 to exit
+
+         8: iload_1                     // Load i
+         9: istore_2                    // Store in local variable 2 (minIndex = i)
+        10: iload_1                     // Load i
+        11: iconst_1                    // Load integer constant 1
+        12: iadd                        // i + 1 (start j at i + 1)
+        13: istore_3                    // Store in local variable 3 (inner index j = i + 1)
+        14: iload_3                     // Load j
+        15: aload_0                     // Load the array
+        16: arraylength                 // Get array length
+        17: if_icmpge     37            // If j >= array length, jump to 37 (end of inner loop)
+
+        20: aload_0                     // Load the array
+        21: iload_3                     // Load j
+        22: iaload                      // Get element at array[j]
+        23: aload_0                     // Load the array
+        24: iload_2                     // Load minIndex
+        25: iaload                      // Get element at array[minIndex]
+        26: if_icmpge     31            // If array[j] >= array[minIndex], skip to 31
+
+        29: iload_3                     // Load j
+        30: istore_2                    // Set minIndex to j
+
+        31: iinc          3, 1          // Increment j by 1
+        34: goto          14            // Jump back to start of inner loop
+
+        37: aload_0                     // Load the array
+        38: iload_1                     // Load i
+        39: iaload                      // Get element at array[i]
+        40: istore_3                    // Store in local variable 3 (temp = array[i])
+
+        41: aload_0                     // Load the array
+        42: iload_1                     // Load i
+        43: aload_0                     // Load the array
+        44: iload_2                     // Load minIndex
+        45: iaload                      // Get element at array[minIndex]
+        46: iastore                     // Set array[i] = array[minIndex]
+
+        47: aload_0                     // Load the array
+        48: iload_2                     // Load minIndex
+        49: iload_3                     // Load temp (previous array[i])
+        50: iastore                     // Set array[minIndex] = temp (swap values)
+
+        51: iinc          1, 1          // Increment i by 1
+        54: goto          2             // Jump back to start of outer loop
+
+        57: return                      // End of method
+      LineNumberTable:                  // Table mapping bytecode to source line numbers
+        line 21: 0                      // Corresponds to the start of the method
+        line 22: 8                      // Corresponds to minIndex = i assignment
+        line 23: 10                     // Corresponds to the start of inner loop
+        line 24: 20                     // Corresponds to if condition in inner loop
+        line 25: 29                     // Corresponds to minIndex = j assignment
+        line 23: 31                     // Corresponds to incrementing j
+        line 26: 37                     // Corresponds to swapping elements
+        line 21: 51                     // Corresponds to incrementing i
+        line 28: 57                     // End of the method
+      StackMapTable: number_of_entries = 5
+        frame_type = 252 /* append */
+          offset_delta = 2              // State of variables after `i = 0` is initialized
+          locals = [ int ]              // Specifies current local variables at offset 2
+        frame_type = 253 /* append */
+          offset_delta = 11             // State of variables after `minIndex = i`
+          locals = [ int, int ]         // Specifies variables at offset 11
+        frame_type = 16 /* same */      // Specifies same variables as last frame
+        frame_type = 250 /* chop */
+          offset_delta = 5              // Removes variables no longer in use
+        frame_type = 249 /* chop */
+          offset_delta = 19             // Removes additional variables, returning to method end
