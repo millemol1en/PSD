@@ -144,6 +144,40 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
+    | Switch (e, cases) ->
+        // [S.1]: We first need to assign a label to each "CASE". 
+        let casesWithLabels = List.map (fun (caseNumber, block) -> (caseNumber, block, newLabel())) cases
+        
+        // [S.2] We create the end label - the one which indicates the block is finished.
+        //       The statement which turns out to be true, will have a "GOTO" instruction attached to it
+        //       which subsequently allows it to jump to the label.
+        let endLabel        = newLabel()
+        
+        // [S.3]: We evaluate the expression:
+        let expression      = cExpr e varEnv funEnv
+        
+        // [S.4]: In conjunction with the newly added labels, we attach the instructions necessary to first perform
+        //        the comparison between our 'expression' and the 'caseNumber' as well as the IFNZRO (incase it is true)
+        //        to jump to the "stmt" with the corresponding Label and execute it. 
+        let casesWithJmps = List.fold (fun acc (caseNumber, _, label) ->
+            expression
+            @ [CSTI caseNumber; EQ; IFNZRO label] @ acc) [] casesWithLabels
+        
+        // [S.5]: Here we first attach the label to each statement as well as the code to perform the execution of the statement.
+        //        Finally, we have the GOTO instruction so as to jump to the end of the Switch-Case in case the case executed
+        //        successfully. 
+        let casesWithStmt = List.fold (fun acc (_, block, label) ->
+            [Label label]
+            @ cStmt block varEnv funEnv
+            @ [GOTO endLabel] @ acc) [] casesWithLabels
+        
+        
+        casesWithJmps @ casesWithStmt @ [Label endLabel]
+        
+        (*
+            Another way of formatting this:
+        *)
+        // @ [INSCP - 1] // Remove result of expression from stack as this is a statement
 
 and cStmtOrDec stmtOrDec (varEnv : varEnv) (funEnv : funEnv) : varEnv * instr list = 
     match stmtOrDec with 
@@ -191,6 +225,31 @@ and cExpr (e : expr) (varEnv : varEnv) (funEnv : funEnv) : instr list =
          | ">"   -> [SWAP; LT]
          | "<="  -> [SWAP; LT; NOT]
          | _     -> raise (Failure "unknown primitive 2"))
+    (* Exercise 8.3 *)
+    | PreInc(addr) ->
+      // #1 The first part creates a list of instructions which loads the specified "addr" to the top of the stack
+      // #2 We then append this to the proceeding list of instruction which:
+      //        -> DUP  :: Duplicate the address of "i" - WHY? Because, we need one to calculate the result of "i+1 = new i" and then another to assign "i = new i"
+      //        -> LDI  :: Load the value of "i" - so the value stored at address "i".
+      //        -> CSTI :: Create a constant of 1 on the stack.
+      //        -> ADD  :: Add the 2 values on the stack together - this would give us "i + 1" = new i
+      //        -> STI  :: now store the newly calculate value at the address "i". This is why duplication was necessary. 
+      cAccess addr varEnv funEnv @ [DUP; LDI; CSTI 1; ADD; STI]
+    | PreDec(addr) ->
+      cAccess addr varEnv funEnv @ [DUP; LDI; CSTI 1; SUB; STI]
+    (* Exercise 8.5 *)
+    | Cond(e1, e2, e3) ->
+      let lab1 = newLabel()             // This will represent the expression 'e2'
+      let lab2 = newLabel()             // This will represent the expression 'e3'
+      
+      cExpr e1 varEnv funEnv            // Evaluate the conditional 'e1' statement and leave the result on top of the stack.
+      @ [IFZERO lab1]                   // Instruction "IFZERO" will jump to label lab1 if our 'e1' is zero (which represents false).
+      @ cExpr e2 varEnv funEnv          // Evaluate the 'e2' statement and leave it on top of the stack.
+      @ [GOTO lab2]                     // As we didn't jump at the "IFZERO" instruction when then execute the instruction GOTO
+      @ [Label lab1]                    // Label 1 indicates our 'e3' expression
+      @ cExpr e3 varEnv funEnv          // Evaluate the 'e3' statement and leave it on top of the stack.
+      @ [Label lab2]                    // Finish
+      
     | Andalso(e1, e2) ->
       let labend   = newLabel()
       let labfalse = newLabel()
