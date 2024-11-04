@@ -1,0 +1,21 @@
+Exercise 9.2
+(i)
+Concatenate using StringBuilder:
+Result length: 168894;    time:   0,000 sec
+Concatenate using repeated string concatenation:
+Result length: 168894;    time:   0,998 sec
+
+(ii)
+We werent able to get the perfmon up and running to view overall “% Time in GC”, but using dotnet counters, we could view “% Time in GC since last GC”, and with a runtime of 0.998 seconds, we observed it was spending about 57% of the time doing garbage collection. This high percentage suggest that repeated string concatenation are leading to excessive allocations, which in turn causes .NET garbage collector to operate frequently.
+<picture in pdf>
+Platform description: 
+OS: Windows 10
+.NET Runtime Version: .NET Version 8.0.100-rc.2.23502.2
+IDE: Visual Studio Code with .NET CLI tools
+
+Used dotnet-counters monitor to track % Time in GC
+
+(iii)
+
+We made a program that just created 100 million object, and this program only spent 6% of the execution in GC 
+<picture in pdf>

@@ -14,7 +14,7 @@ public class StringConcatSpeed
 {
   public static void Main(String[] args)
   {
-    const int count = 300000;
+    const int count = 30000;
 
     Console.WriteLine("Initialization: Building array of small strings");
 
