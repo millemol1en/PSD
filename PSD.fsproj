@@ -41,19 +41,30 @@
 <!--    <Compile Include="./Assignment_05/TypedFun.fs" />-->
 <!--  </ItemGroup>-->
 
+<!--    <ItemGroup>-->
+<!--      <Compile Include="./Assignment_06/MicroC/Absyn.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Util.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Machine.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Comp.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Contcomp.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/CPar.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/CLex.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Interp.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/Parse.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/ParseAndComp.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/ParseAndContcomp.fs" />-->
+<!--      <Compile Include="./Assignment_06/MicroC/ParseAndRun.fs" />-->
+<!--    </ItemGroup>-->
+  
     <ItemGroup>
-      <Compile Include="./Assignment_06/MicroC/Absyn.fs" />
-      <Compile Include="./Assignment_06/MicroC/Util.fs" />
-      <Compile Include="./Assignment_06/MicroC/Machine.fs" />
-      <Compile Include="./Assignment_06/MicroC/Comp.fs" />
-      <Compile Include="./Assignment_06/MicroC/Contcomp.fs" />
-      <Compile Include="./Assignment_06/MicroC/CPar.fs" />
-      <Compile Include="./Assignment_06/MicroC/CLex.fs" />
-      <Compile Include="./Assignment_06/MicroC/Interp.fs" />
-      <Compile Include="./Assignment_06/MicroC/Parse.fs" />
-      <Compile Include="./Assignment_06/MicroC/ParseAndComp.fs" />
-      <Compile Include="./Assignment_06/MicroC/ParseAndContcomp.fs" />
-      <Compile Include="./Assignment_06/MicroC/ParseAndRun.fs" />
+      <Compile Include="./Assignment_09/Util.fs" />
+      <Compile Include="./Assignment_09/Absyn.fs" />
+      <Compile Include="./Assignment_09/CPar.fs" />
+      <Compile Include="./Assignment_09/CLex.fs" />
+      <Compile Include="./Assignment_09/Parse.fs" />
+      <Compile Include="./Assignment_09/Machine.fs" />
+      <Compile Include="./Assignment_09/Comp.fs" />
+      <Compile Include="./Assignment_09/ListCC.fs" />
     </ItemGroup>
 
     <ItemGroup>
