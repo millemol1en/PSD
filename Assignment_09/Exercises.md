@@ -23,8 +23,7 @@ A second field, called the `cdr` field, which can hold any abstract machine valu
 
 
 ### i)
-Write 3-10 line descriptions of how the abstract machine executes each of the
-following instructions:
+**Write 3-10 line descriptions of how the abstract machine executes each of the following instructions:**
 
 ```fsharp
 ADD     // which adds two integers.
@@ -36,13 +35,20 @@ CAR
 SETCAR
 ```
 
-| Instruction | Result                                                                                                                                                                   |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ADD`       | Untag the two top elements of the stack, and then add these two together. Tag them, and assign them to the stackpointer minus one and decrement the stackpointer by one. |
-| `CSTI i`    |                                                                                                                                                                          |
+Looking at the `listmachine.c` file, we can conclude the following:
+
+| Instruction | Effect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ADD`       | We first `Untag` the 2 values we are adding together and thereafter `Tag` their product. Finally, the result is stored in position `s[sp-1]` and the stack pointer `SP` is decrementing resulting in popping the top and making `s[sp-1]` the new top.                                                                                                                                                                                                                                                                                                                         |
+| `CSTI i`    | We first `Tag` the value at `p[pc++]`, then place the result on stack `s[sp+1]` and finally we increment the `SP` by 1, giving us a new top on our stack.                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `NIL`       | Whilst the instruction `CSTI i` would get marked, `NIL` does not. Instead, we simply place `0` at the position `s[sp+1]` and increment the `sp` by 1.                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `IFZERO`    | We first pop the top of the stack (`s[sp--]`), giving us a `word` variable `v`. A ternary conditional checks if this variable `v` is an integer (`IsInt(v)`) which, in the case that it is, we need to first `Untag` it before checking to see if it is `0` or not. <br/><br/> Ultimately, the result from this is itself a ternary condition, which if the variable `v` was `0`, will set the `pc` to the next instruction `p[pc]` otherwise it will increment `pc` by `pc + 1`.                                                                                              |
+| `CONS`      | We allocate space for 2 new objects on the heap - both of which have a of size of `word`. The allocate function returns a new pair `p`, representing this object. We then set the 1st element our pair `p` (_index 1_) to be equal to second top-most element `s[sp - 1]` and the 2nd element (_index 2_) to be set to the top-most element `s[sp]`. The indices equate to `CAR` and `CDR` respectively. <br/><br/> Finally, we set this new heap allocated pair `p` to be equal to second top-most position in the stack and pop the top-most leaving us with a new root `p`. |
+| `CAR`       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `SETCAR`    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
 
-### ii) [_for our group we assume it to be 32-bit_]
+### ii) 
 #### BlockTag(hdr) ((hdr)>>24)
 Left and right bit shifting is performed as follows:
  - `0010 << 1  →  0100`  [LEFT]
@@ -97,3 +103,29 @@ tttt tttt nnnn nnnn nnnn nnnn nnnn nn00
 tttt tttt nnnn nnnn nnnn nnnn nnnn nncc
 ```
 
+### iii) 
+**When does the abstract machine, or more precisely, its instruction interpretation loop, call the `allocate` function? Is there any other interaction between the abstract machine (also called the mutator) and the garbage collector?**
+
+Looking at the file `listmachine.c`, we see the function `allocate` is called inside the `switch-case` for `CONS`
+
+```c++
+case CONS: {
+      word* p = allocate(CONSTAG, 2, s, sp);        // Allocate space for our object on the stack
+      p[1] = (word)s[sp - 1];                       // Assign "car" to be the top-most value on our stack
+      p[2] = (word)s[sp];                           // Assign "cdr" to be the 2nd top-most value on our stack
+      s[sp - 1] = (word)p;                          // Now set the 2nd top-most position on our stack to be equal to our newly created object "p"
+      sp--;                                         // Decrement the stack pointer - popping off the top but still keeping a root to link our object. 
+    } break;
+```
+
+
+### iv)
+**In what situation will the garbage collector’s `collect` function be called?**
+
+In the case that there is no free space in the freelist, prompting the GC to perform garbage collection. This can be seen in the code snippet from `listmachine.c`:
+
+```fsharp
+// No free space, do a garbage collection and try again
+    if (attempt == 1)
+      collect(s, sp);
+```
