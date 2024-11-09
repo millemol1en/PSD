@@ -1,0 +1,5 @@
+alias list_ex30="./listmachine -trace ../../Examples/ex30.out 4"
+alias run_ex30="./listmachine ../../Examples/ex30.out 1000"
+alias run_ex35="./listmachine ../../Examples/ex35.out"
+alias run_ex36="./listmachine ../../Examples/ex36.out"
+alias compile="gcc -o ./listmachine ./listmachine.c"

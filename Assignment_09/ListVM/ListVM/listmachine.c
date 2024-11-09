@@ -64,6 +64,7 @@ created when allocating all but the last word of a free block.
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
 // Check Windows
 #if _WIN32 || _WIN64
@@ -124,10 +125,12 @@ word* readfile(char* filename);
 
 #if defined(ENV32)
   #define IsInt(v) (((v)&1)==1)
+  #define IsNotInt(v) (((v)&1)==0)
   #define Tag(v) (((v)<<1)|1)
   #define Untag(v) ((v)>>1)
 #elif defined(ENV64)
   #define IsInt(v) (((v)&1)==1)
+  #define IsNotInt(v) (((v)&1)==0)
   #define Tag(v) (((v)<<1)|1)
   #define Untag(v) ((v)>>1)
 #endif
@@ -470,21 +473,74 @@ void initheap() {
   freelist = &heap[0];
 }
 
+void mark(word* v) {
+  if (Color(v[0]) != White) return;
+
+  v[0] = Paint(v[0], Black);
+
+  if (BlockTag(v[0]) == CONSTAG) {
+    if (IsNotInt(v[1]) && v[1] != 0) {
+      mark((word*) v[1]);
+    }
+
+    if (IsNotInt(v[2]) && v[2] != 0) {
+      mark((word*) v[2]);
+    }
+  }
+}
+
 void markPhase(word s[], word sp) {
-  printf("marking ...\n");
-  // TODO: Actually mark something
+  for (int i = 0; i <= sp; i++)
+  {
+    if (inHeap((word*)s[i]))
+    {
+      mark((word*)s[i]);
+    }
+  }
 }
 
 void sweepPhase() {
-  printf("sweeping ...\n");
-  // TODO: Actually sweep
+  word* block = heap;
+  int len = 0;
+  
+  while (block < afterHeap) {
+    switch (Color(block[0])) {
+      case White:
+        
+        // Exercise 10.3 && 10.4 
+        len = Length(block[0]);
+      
+        while(true)
+        {
+          if (block[len + 1] == White) len += Length(len + 1);
+          else break;
+        }
+
+        block[0] = mkheader(BlockTag(block[0]),len, Blue);
+      
+        block[1] = (word) freelist;
+        freelist = block;
+      
+        break;
+      case Black:
+        block[0] = Paint(block[0], White);
+        break;
+      case Blue:
+        break;
+      default:
+        break;
+    }
+
+    // Point to next block:
+    block += Length(block[0]) + 1;
+  }
 }
 
 void collect(word s[], word sp) {
   markPhase(s, sp);
-  heapStatistics();
+  //heapStatistics();
   sweepPhase();
-  heapStatistics();
+  //heapStatistics();
 }
 
 word* allocate(unsigned int tag, uword length, word s[], word sp) {

@@ -9,6 +9,7 @@
     <ClCompile Include="Assignment_06\MicroC\Exercises\ex8_3.c" />
     <ClCompile Include="Assignment_06\MicroC\Exercises\ex8_5.c" />
     <ClCompile Include="Assignment_06\MicroC\Exercises\ex8_6.c" />
+    <ClCompile Include="Assignment_09\ListVM\ListVM\listmachine.c" />
   </ItemGroup>
 
   <PropertyGroup>
