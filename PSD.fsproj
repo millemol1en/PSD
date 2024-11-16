@@ -68,6 +68,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Include="./Assignment_10/Cont/Contfun.fs" />
+      <Compile Include="./Assignment_10/Cont/Contimp.fs" />
+      <Compile Include="./Assignment_10/Cont/Icon.fs" />
+      <Compile Include="./Assignment_10/Continuation_Examples.fs" />
+    </ItemGroup>
+  
+  
+    <ItemGroup>
         <Reference Include="./fsharp/FsLexYacc.Runtime.dll" />
     </ItemGroup>
     
