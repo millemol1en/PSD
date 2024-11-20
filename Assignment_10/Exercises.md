@@ -169,12 +169,94 @@ let prodi lst =
 ```
 
 ## Question 11.8:
-"_Answer the following questions:_"
-
-#### i):
+#### i)
 "_Write an expression that produces and prints the values `3 5 7 9`. Write an expression that produces and prints the values `21 22 31 32 41 42`._"
 
 
 ```fsharp
+// i_a
+let exi = Every(
+            Write(
+                Prim("+", CstI 1,
+                Prim("*", CstI 2,
+                     FromTo(1, 4)))));
 
+// i_b - 21 22 31 32 41 42
+// This one is hella difficult for my dumbass...
+```
+
+#### ii)
+```fsharp
+let exii = Write(Prim("<", CstI 50, Prim("*", CstI 7, FromTo(1, 10))))
+```
+
+#### iii)
+"_Extend the abstract syntax with unary (one-argument) primitive functions, like
+this:_"
+
+
+```fsharp
+// Updated type 'expr':
+type expr = 
+  ...
+  | Prim of string * expr * expr
+  | Prim1 of string * expr
+  ...
+  | Fail;;
+
+// Updated eval:
+let rec eval (e : expr) (cont : cont) (econt : econt) = 
+    match e with
+    ...
+    | Prim1 (ope, e) ->
+          eval e (fun v -> fun econt1 ->
+                match (ope, v) with
+                | ("sqr", Int i1) ->
+                    cont (Int(i1*i1)) econt1
+                | ("even", Int i1) ->
+                    // Like above, we add the possibility of backtracking with the use of continuation...
+                    if i1 % 2 = 0 then 
+                        cont (Int i1) econt1
+                    else
+                        econt1 ()
+                | ("!", Int i1) ->
+                    cont (Int(-i1)) econt1
+                | _ -> Str "unknown prim1"
+              )
+              econt
+              
+// Some examples:
+let exiii_1 = Every(Write(Prim1("!", FromTo(1, 4))))
+> run exiii_1;;
+-1 -2 -3 -4 val it: value = Int 0
+
+let exiii_2 = Every(Write(Prim1("even", FromTo(1, 7))))
+> run exiii_2;;
+2 4 6 val it: value = Int 0
+
+let exiii_3 = Write(Prim1("sqr", CstI 10))
+> run exiii_3;;
+100 val it: value = Int 100
+```
+
+#### iv)
+"_Define a unary primitive multiples that succeeds infinitely many times, producing all multiples of its argument. For instance, multiples(3) should produce 3, 6, 9, . . . . Note that multiples(3 to 4) would produce multiples of 3 forever, and would never backtrack to the subexpression (3 to 4) to begin producing multiples of 4._"
+
+```fsharp
+// Updated eval:
+let rec eval (e : expr) (cont : cont) (econt : econt) = 
+    match e with
+    ...
+    | Prim1 (ope, e) ->
+          eval e (fun v -> fun econt1 ->
+                match (ope, v) with
+                ...
+                | ("multiplies", Int i1) ->
+                    let rec infMult m =
+                        let res = i1 * m
+                        cont (Int res) (fun () -> infMult (res))    // From my understanding, we by-pass the normal backtracking by using the "fun ()" instead of econt1 as we do in all other examples above?
+                    infMult i1
+                | _ -> Str "unknown prim1"
+              )
+              econt
 ```

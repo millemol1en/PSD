@@ -30,7 +30,8 @@ type expr =
   | FromTo of int * int
   | Write of expr
   | If of expr * expr * expr
-  | Prim of string * expr * expr 
+  | Prim of string * expr * expr
+  | Prim1 of string * expr
   | And of expr * expr
   | Or  of expr * expr
   | Seq of expr * expr
@@ -86,7 +87,29 @@ let rec eval (e : expr) (cont : cont) (econt : econt) =
                   else
                       econt2 ()
               | _ -> Str "unknown prim2")
-              econt1)
+              econt1
+          )
+          econt
+    | Prim1 (ope, e) ->
+      eval e (fun v -> fun econt1 ->
+            match (ope, v) with
+            | ("sqr", Int i1) ->
+                cont (Int(i1+i1)) econt1
+            | ("even", Int i1) ->
+                // Like above, we add the possibility of backtracking with the use of continuation...
+                if i1 % 2 = 0 then 
+                    cont (Int i1) econt1
+                else
+                    econt1 ()
+            | ("multiplies", Int i1) ->
+                let rec infMult m =
+                    let res = i1 * m
+                    cont (Int res) (fun () -> infMult (res))    // From my understanding, we by-pass the normal backtracking by using the "fun ()" instead of econt1 as we do in all other examples above?
+                infMult i1
+            | ("!", Int i1) ->
+                cont (Int(-i1)) econt1
+            | _ -> Str "unknown prim1"
+          )
           econt
     | And(e1, e2) -> 
       eval e1 (fun _ -> fun econt1 -> eval e2 cont econt1) econt
@@ -138,4 +161,22 @@ let ex8 = Write(Prim("<", CstI 4, FromTo(1, 10)));
 // every(write(4 < (1 to 10)))
 let ex9 = Every(Write(Prim("<", CstI 4, FromTo(1, 10))));
 
-// 
+// i_a
+let exi = Every(
+            Write(
+                Prim("+", CstI 1,
+                Prim("*", CstI 2,
+                     FromTo(1, 4)))));
+
+// i_b - 21 22 31 32 41 42. FUCK THIS!
+
+// ii - write an expression that prints the least multiple of 7 that is greater than 50.
+
+let exii = Write(Prim("<", CstI 50, Prim("*", CstI 7, FromTo(1, 10))))
+
+let exiii_1 = Every(Write(Prim1("!", FromTo(1, 4))))
+
+let exiii_2 = Every(Write(Prim1("even", FromTo(1, 7))))
+
+let exiii_3 = Write(Prim1("sqr", CstI 10))
+
