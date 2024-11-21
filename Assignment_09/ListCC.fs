@@ -1,5 +1,7 @@
 (* File ListC/ListCC.fs *)
 
+module ListCC
+
 let args = System.Environment.GetCommandLineArgs()
 
 let _ = printf "List-C compiler v 1.0.0.0 of 2012-02-13\n";;
