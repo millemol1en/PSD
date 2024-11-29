@@ -48,31 +48,39 @@ The easiest is to first remove the epsilon from our NFA. To do this, we create a
 
 **REMEMBER!** An epsilon will always contain the node itself - hence the reason why node `1` has node `1`.
 
-During this step, we are ONLY focused on the result of the epsilon connection. Our goal is to remove them by stitching existing nodes together. As node `3` references nodes `{3,4}`, we can conclude that these need to be stitched together - giving us `α`, a combination of nodes `3` and `4`:
+During this step, we are ONLY focused on the result of the epsilon connection. Our goal is to remove them by stitching existing nodes together:
 
-|               | a     | b     | ε     |
-|---------------|-------|-------|-------|
-| 1             | {2,3} | Ø     | 1     |
-| 2             | Ø     | {3,4} | 2     |
-| **α** {3,4}   | 4     | 5     | {3,4} | 
-| 5             | Ø     | Ø     | 5     |
+|   | a     | b     |
+|---|-------|-------|
+| 1 | {2,3} | Ø     |
+| 2 | Ø     | {3,4} | 
+| 3 | 4     | 5     | 
+| 4 | 4     | 5     | 
+| 5 | Ø     | Ø     |
 
-![Alt Text](./SolutionPictures/Exam%202019%20Question%201%20NFA%20No%20Epsilon.png)
-
+![Alt Text](./SolutionPictures/Exam%202019%20Question%201%20No%20Epsilon.png)
 
 ##### Step 2: Convert NFA to DFA:
-Using the slimmed down NFA, we can now create the table to 
+Using the slimmed down NFA, we can now create the DFA table. We will assign new names to each of the states. 
 
-|                          | a                        | b                    |
-|--------------------------|--------------------------|----------------------|
-| 1     := (S<sub>0</sub>) | {2,α} := (S<sub>1</sub>) | Ø                    |
-| 2     := N/A             | Ø                        | α := (S<sub>2</sub>) |
-| α     := (S<sub>3</sub>) | α := (S<sub>2</sub>)     | 5 := (S<sub>4</sub>) | 
-| 5     := (S<sub>4</sub>) | Ø                        | Ø                    |
-| {2,α} := (S<sub>1</sub>) | α := (S<sub>2</sub>)     | α := (S<sub>3</sub>) |
-| {α,5} := (S<sub>3</sub>) | α := (S<sub>2</sub>)     | 5 := (S<sub>4</sub>) |
+**Things to note!**
+- The states with a hyphen indicate that it is no longer in use as we have no way of getting to it from our initial state S<sub>0</sub>.
+- All combinatorial states which contain a terminal state are themselves terminal states. For us, that makes S<sub>3</sub> and S<sub>4</sub> terminals.
+- We remove the state S<sub>5</sub> from our DFA as it would create the desired language.
 
-![Alt Text](./SolutionPictures/Exam%202019%20DFA.png)
+| State   | a     | b       | New State     | a             | b             | 
+|---------|-------|---------|---------------|---------------|---------------|
+| 1       | {2,3} | Ø       | S<sub>0</sub> | S<sub>1</sub> | Ø             |
+| 2       | Ø     | {3,4}   | -             | -             | -             |
+| 3       | 4     | 5       | -             | -             | -             |
+| 4       | 4     | {4,5}   | S<sub>2</sub> | S<sub>2</sub> | S<sub>4</sub> |
+| 5       | Ø     | Ø       | S<sub>5</sub> | Ø             | Ø             |
+| {2,3}   | 4     | {3,4,5} | S<sub>1</sub> | S<sub>2</sub> | S<sub>3</sub> |
+| {3,4}   | 4     | {4,5}   | -             | -             | -             |
+| {3,4,5} | 4     | {4,5}   | S<sub>3</sub> | S<sub>2</sub> | S<sub>4</sub> |
+| {4,5}   | Ø     | 5       | S<sub>4</sub> | Ø             | S<sub>5</sub> |
+
+![Alt Text](./SolutionPictures/Exam%202019%20Question%201%20NFA.png)
 
 ### Question 5:
 #### Spørgsmål:

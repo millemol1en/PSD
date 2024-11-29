@@ -157,9 +157,12 @@ end
 
 ### Question 1:
 #### Spørgsmål:
-"_Tegn et evaluerings træ, med reglerne i figur 4.3 (PLC) samt e10 og e11 ovenfor, for udtrykket nedenfor._"
+"_Tegn et evaluerings træ, med reglerne i figur 4.3 (PLC) samt e10 og e11 for udtrykket nedenfor._"
+
+![Alt Text](./SolutionPictures/Derivation%20Tree%20Rules%202.png)
 
 #### Svar:
+![Alt Text](./SolutionPictures/Derivation%20Tree%20Solution.png)
 
 ### Question 2:
 #### Spørgsmål:
