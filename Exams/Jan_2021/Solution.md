@@ -12,6 +12,7 @@ expressions og er vist på figur 8.7 i PLC._"
 "_For at implementere betingede udtryk som L–værdier udvider vi typen access i filen `Absyn.fs` med
 `CondExpAccess` således:_"
 
+
 ```fsharp
 and access =
 | AccVar of string (* Variable access x *)
