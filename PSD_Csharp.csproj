@@ -12,6 +12,14 @@
     <ClCompile Include="Assignment_09\ListVM\ListVM\listmachine.c" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exams\Dec_2024\SolutionPictures\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assignment_02\HelloLex\hello.fsproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
